@@ -105,7 +105,7 @@
                                 <span class="animate-spin mr-2">⏳</span>
                                 <span x-text="loadingMessage"></span>
                             </div>
-                            <div class="text-xs text-gray-500">This may take 30-60 seconds...</div>
+                            <div class="text-xs text-gray-500">This may take 30 seconds...</div>
                         </div>
                     </div>
                 </div>
@@ -531,7 +531,7 @@
                         const data = await response.json();
 
                         if (data.status === 'running') {
-                            this.loadingMessage = 'Scraping AA.com... This may take 30-60 seconds';
+                            this.loadingMessage = 'Scraping AA.com... This may take 30 seconds';
                         } else if (data.status === 'completed') {
                             this.currentScrape = data;
                             this.flights = data.results?.flights || [];

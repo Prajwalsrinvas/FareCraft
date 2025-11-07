@@ -3,14 +3,17 @@ Database setup and operations for scrape history
 """
 
 import json
-import os
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
-# Database at src/ level (parent directory)
-DATABASE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "flights.db")
+# Output directory: relative to this file
+# Docker: /app/output/, Local: /home/prajwal/WS/src/output/
+OUTPUT_DIR = Path(__file__).parent.parent / "output"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+DATABASE_PATH = str(OUTPUT_DIR / "flights.db")
 
 
 @contextmanager

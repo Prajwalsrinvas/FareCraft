@@ -6,6 +6,7 @@ Hybrid approach: Camoufox (Firefox) for cookie generation → curl_cffi for fast
 import concurrent.futures
 import json
 import os
+import random
 import sys
 import time
 from datetime import datetime
@@ -24,8 +25,9 @@ from api.database import (clean_old_cookie_cache, get_latest_cookie_cache,
                           init_db, save_cookie_cache)
 
 # Configure loguru logging
-log_dir = Path(__file__).parent.parent.parent / "logs"
-log_dir.mkdir(exist_ok=True)
+# Docker: /app/output/logs, Local: /home/prajwal/WS/src/output/logs
+log_dir = Path(__file__).parent.parent / "output" / "logs"
+log_dir.mkdir(parents=True, exist_ok=True)
 log_file = log_dir / f"{datetime.now().strftime('%Y-%m-%d')}.log"
 
 # Remove default handler and add file handler with rotation
@@ -116,7 +118,9 @@ def get_akamai_cookies() -> dict[str, str]:
     logger.info("🦊 START: Launching Camoufox to bypass Akamai Bot Manager...")
     cookie_gen_start = time.time()
 
-    with Camoufox(headless=True) as browser:
+    # Enable human-like cursor movement for better stealth
+    # humanize=True uses default 1.5s max duration for natural trajectories
+    with Camoufox(headless=True, humanize=True) as browser:
         page = browser.new_page()
 
         # Visit booking search page to trigger ALL required cookies
@@ -651,11 +655,22 @@ def scrape_flights(
 
             # Step 2: Fetch Award and Revenue data in parallel
             # Each fetch_flights call has its own 3-attempt retry with exponential backoff
+            # Randomize request order to appear less bot-like
             logger.info("STEP 2: Fetch flight data from AA.com API (parallel)")
 
             api_start = time.time()
 
+            # Randomize which request type goes first (50/50 chance)
+            requests_order = ["Award", "Revenue"]
+            if random.random() < 0.5:
+                requests_order.reverse()
+
+            logger.debug(
+                f"   Request order: {requests_order[0]} then {requests_order[1]}"
+            )
+
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+                # Submit both requests (order doesn't matter for parallel execution)
                 award_future = executor.submit(
                     fetch_flights,
                     cookies,
@@ -675,6 +690,7 @@ def scrape_flights(
                     passengers,
                 )
 
+                # Wait for results (both execute in parallel regardless of submission order)
                 award_flights = award_future.result()
                 cash_flights = cash_future.result()
 
@@ -752,8 +768,8 @@ def main() -> int:
         logger.info(f"🎯 Scraping: {ORIGIN} → {DESTINATION} on {DATE}")
         output = scrape_flights(ORIGIN, DESTINATION, DATE, PASSENGERS, CABIN_CLASS)
 
-        # Determine output path
-        output_path = Path("output.json")
+        # Docker: /app/output/output.json, Local: /home/prajwal/WS/src/output/output.json
+        output_path = Path(__file__).parent.parent / "output" / "output.json"
 
         # Write to file
         with open(output_path, "w") as f:
@@ -790,7 +806,7 @@ def main() -> int:
                 "flights": [],
                 "total_results": 0,
             }
-            output_path = Path("output.json")
+            output_path = Path(__file__).parent.parent / "output" / "output.json"
             with open(output_path, "w") as f:
                 json.dump(error_output, f, indent=2)
             logger.info(f"📄 Error output written to: {output_path}")

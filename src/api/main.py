@@ -4,6 +4,7 @@ FastAPI backend for AA Flight Scraper
 
 import json
 import os
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import BackgroundTasks, FastAPI, HTTPException
@@ -16,14 +17,34 @@ from .database import (complete_scrape, create_scrape, delete_scrape,
                        fail_scrape, get_all_scrapes, get_current_job_id,
                        get_latest_completed, get_running_scrape, get_scrape,
                        init_db, is_scrape_running, try_start_scrape)
+from .mcp_server import mcp
 from .models import (ComparisonResponse, ScrapeListItem, ScrapeRequest,
                      ScrapeResponse, ScrapeStatus)
 
-# Initialize FastAPI app
+# Create MCP HTTP app before FastAPI app (needed for lifespan)
+mcp_app = mcp.http_app(path="/", transport="streamable-http")
+
+
+# Combined lifespan context manager for both FastAPI and MCP
+@asynccontextmanager
+async def combined_lifespan(app: FastAPI):
+    # Startup: Initialize database
+    init_db()
+    print("✅ Database initialized")
+
+    # Initialize MCP app lifespan (required for StreamableHTTP session manager)
+    async with mcp_app.lifespan(app):
+        yield
+
+    # Shutdown: Add any cleanup logic here if needed
+
+
+# Initialize FastAPI app with combined lifespan
 app = FastAPI(
     title="FareCraft API",
     description="Award Flight Optimizer - Scrape American Airlines flight pricing and calculate CPP",
     version="1.0.0",
+    lifespan=combined_lifespan,
 )
 
 # CORS middleware
@@ -35,12 +56,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# Initialize database on startup
-@app.on_event("startup")
-async def startup_event():
-    init_db()
-    print("✅ Database initialized")
+# Mount MCP server at /mcp endpoint
+app.mount("/mcp", mcp_app)
 
 
 def run_scrape_job(

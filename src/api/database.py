@@ -9,9 +9,43 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-# Output directory: relative to this file
-# Docker: /app/output/, Local: /home/prajwal/WS/src/output/
-OUTPUT_DIR = Path(__file__).parent.parent / "output"
+from loguru import logger
+
+# Output directory: Use absolute path that works in Docker and local
+# Docker: /app/output/ (volume mount from ./output on host)
+# Local: <project_root>/output/ (where pyproject.toml is located)
+#
+# Strategy:
+# 1. Docker: Check if /app/output exists (created by Dockerfile)
+# 2. Local: Find project root (containing pyproject.toml) and use {root}/output
+import os
+import sys
+
+def find_project_root() -> Path:
+    """
+    Find project root by looking for pyproject.toml or .git directory.
+    Walks up from current file location.
+    """
+    current = Path(__file__).resolve()
+
+    # Walk up the directory tree
+    for parent in [current] + list(current.parents):
+        # Check for project markers
+        if (parent / "pyproject.toml").exists() or (parent / ".git").exists():
+            return parent
+
+    # Fallback: use current working directory
+    return Path.cwd()
+
+# Determine output directory based on environment
+if os.path.exists("/app/output"):
+    # Docker environment - use hardcoded path (created by Dockerfile, mounted as volume)
+    OUTPUT_DIR = Path("/app/output")
+else:
+    # Local environment - find project root and use {root}/output
+    project_root = find_project_root()
+    OUTPUT_DIR = project_root / "output"
+
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 DATABASE_PATH = str(OUTPUT_DIR / "flights.db")
 
@@ -296,6 +330,9 @@ def save_cookie_cache(cookies: dict[str, str], expiration_timestamp: int) -> Non
         cookies: Dictionary of cookie name-value pairs
         expiration_timestamp: Unix timestamp in seconds when cookies expire
     """
+    import os
+    import time
+
     with get_db() as conn:
         conn.execute(
             """
@@ -304,6 +341,25 @@ def save_cookie_cache(cookies: dict[str, str], expiration_timestamp: int) -> Non
             """,
             (json.dumps(cookies), expiration_timestamp, datetime.utcnow().isoformat()),
         )
+
+    # Force filesystem sync for Docker volumes (critical for fast-exiting containers)
+    # Without this, contest mode exits before writes reach the host filesystem
+    try:
+        # 1. Explicitly fsync the database file descriptor
+        # This ensures SQLite's write buffer is flushed to the OS
+        db_fd = os.open(DATABASE_PATH, os.O_RDONLY)
+        os.fsync(db_fd)
+        os.close(db_fd)
+
+        # 2. System-wide sync to flush all filesystem buffers
+        import subprocess
+        subprocess.run(['sync'], check=False, capture_output=True, timeout=1)
+
+        # 3. Small delay for Docker volume mount to complete async flush
+        # Volume mounts have additional buffering that happens after OS sync
+        time.sleep(0.15)  # 150ms is enough for most systems
+    except Exception:
+        pass  # Best effort - continue even if sync fails
 
 
 def get_latest_cookie_cache() -> dict[str, Any] | None:

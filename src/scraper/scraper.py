@@ -257,6 +257,24 @@ def update_cookie_expiration_from_response(response_data: dict) -> None:
             conn.commit()
             conn.close()
 
+            # Force filesystem sync for Docker volumes (same as save_cookie_cache)
+            try:
+                import os
+                import subprocess
+
+                # 1. Explicitly fsync the database file descriptor
+                db_fd = os.open(str(DATABASE_PATH), os.O_RDONLY)
+                os.fsync(db_fd)
+                os.close(db_fd)
+
+                # 2. System-wide sync to flush all filesystem buffers
+                subprocess.run(['sync'], check=False, capture_output=True, timeout=1)
+
+                # 3. Small delay for Docker volume mount to complete async flush
+                time.sleep(0.15)
+            except Exception:
+                pass
+
             if cursor.rowcount > 0:
                 minutes_remaining = (session_expiry_sec - int(time.time())) // 60
                 logger.info(

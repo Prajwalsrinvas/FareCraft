@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FareCraft - Award Flight Optimizer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+
+        .cpp-excellent { color: #10b981; font-weight: 600; }
+        .cpp-good { color: #3b82f6; font-weight: 600; }
+        .cpp-fair { color: #f59e0b; font-weight: 600; }
+        .cpp-poor { color: #ef4444; font-weight: 600; }
+
+        .badge-excellent { background-color: #d1fae5; color: #065f46; }
+        .badge-good { background-color: #dbeafe; color: #1e40af; }
+        .badge-fair { background-color: #fef3c7; color: #92400e; }
+        .badge-poor { background-color: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen" x-data="appData()" x-init="init()">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-red-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold">✈️ FareCraft</h1>
+            <p class="text-blue-100 mt-1">Award Flight Optimizer - Find the best CPP (Cents Per Point) for your bookings</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+            <!-- Left Sidebar - Search Form & History -->
+            <div class="lg:col-span-1 space-y-6">
+
+                <!-- Search Form -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4 text-gray-800">Search Flights</h2>
+
+                    <form @submit.prevent="submitScrape()">
+                        <!-- Origin -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
+                            <input type="text" x-model="form.origin"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="LAX" required maxlength="3" pattern="[A-Z]{3}">
+                        </div>
+
+                        <!-- Destination -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
+                            <input type="text" x-model="form.destination"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="JFK" required maxlength="3" pattern="[A-Z]{3}">
+                        </div>
+
+                        <!-- Date -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                            <input type="date" x-model="form.date"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   required>
+                        </div>
+
+                        <!-- Passengers -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Passengers</label>
+                            <input type="number" x-model.number="form.passengers"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   min="1" max="9" required>
+                        </div>
+
+                        <!-- Cabin Class -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Cabin Class</label>
+                            <select x-model="form.cabin_class"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="economy">Economy</option>
+                                <option value="business">Business</option>
+                                <option value="first">First</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                :disabled="isLoading"
+                                class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
+                            <span x-show="!isLoading">🔍 Search Flights</span>
+                            <span x-show="isLoading">⏳ Scraping...</span>
+                        </button>
+                    </form>
+
+                    <!-- Loading Progress -->
+                    <div x-show="isLoading" x-cloak class="mt-4 p-3 bg-blue-50 rounded-md text-sm">
+                        <div class="space-y-2">
+                            <div class="flex items-center text-gray-700">
+                                <span class="animate-spin mr-2">⏳</span>
+                                <span x-text="loadingMessage"></span>
+                            </div>
+                            <div class="text-xs text-gray-500">This may take 30-60 seconds...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Sidebar -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-gray-800">History</h2>
+                        <button @click="loadHistory()" class="text-sm text-blue-600 hover:text-blue-800">
+                            ↻ Refresh
+                        </button>
+                    </div>
+
+                    <div class="space-y-2 max-h-96 overflow-y-auto">
+                        <template x-for="scrape in history" :key="scrape.id">
+                            <div @click="loadScrape(scrape.id)"
+                                 class="p-3 border rounded cursor-pointer hover:bg-gray-50 transition"
+                                 :class="currentScrape && currentScrape.id === scrape.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200'">
+                                <div class="flex justify-between items-start mb-1">
+                                    <div class="font-medium text-sm" x-text="`${scrape.origin} → ${scrape.destination}`"></div>
+                                    <span class="text-xs px-2 py-1 rounded"
+                                          :class="{
+                                              'bg-green-100 text-green-800': scrape.status === 'completed',
+                                              'bg-yellow-100 text-yellow-800': scrape.status === 'running',
+                                              'bg-gray-100 text-gray-800': scrape.status === 'queued',
+                                              'bg-red-100 text-red-800': scrape.status === 'failed'
+                                          }"
+                                          x-text="scrape.status"></span>
+                                </div>
+                                <div class="text-xs text-gray-500" x-text="scrape.date"></div>
+                                <div class="text-xs text-gray-600 mt-1" x-show="scrape.total_flights">
+                                    <span x-text="scrape.total_flights"></span> flights •
+                                    Avg CPP: <span x-text="scrape.avg_cpp ? scrape.avg_cpp.toFixed(2) : 'N/A'"></span>
+                                </div>
+                            </div>
+                        </template>
+
+                        <div x-show="history.length === 0" class="text-center text-gray-500 py-4 text-sm">
+                            No searches yet
+                        </div>
+                    </div>
+
+                    <!-- Compare Mode Toggle -->
+                    <div class="mt-4 pt-4 border-t">
+                        <button @click="toggleCompareMode()"
+                                class="w-full text-sm py-2 px-3 rounded border transition"
+                                :class="compareMode ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'">
+                            <span x-show="!compareMode">📊 Compare Mode</span>
+                            <span x-show="compareMode">✕ Exit Compare</span>
+                        </button>
+
+                        <div x-show="compareMode" x-cloak class="mt-2 space-y-2">
+                            <div class="text-xs text-gray-600">
+                                Selected: <span x-text="compareSelection.length"></span>/2
+                            </div>
+                            <button @click="performComparison()"
+                                    :disabled="compareSelection.length !== 2"
+                                    class="w-full text-sm py-2 px-3 rounded bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white transition">
+                                Compare Selected
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content - Results -->
+            <div class="lg:col-span-3">
+
+                <!-- Error Message -->
+                <div x-show="error" x-cloak class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+                    <div class="flex justify-between items-center">
+                        <span x-text="error"></span>
+                        <button @click="error = null" class="text-red-600 hover:text-red-800">✕</button>
+                    </div>
+                </div>
+
+                <!-- Stats Dashboard -->
+                <div x-show="currentScrape && currentScrape.status === 'completed'" x-cloak class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800">
+                        <span x-text="`${currentScrape.origin} → ${currentScrape.destination}`"></span>
+                        <span class="text-sm font-normal text-gray-500 ml-2" x-text="`on ${currentScrape.date}`"></span>
+                    </h2>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">Total Flights</div>
+                            <div class="text-2xl font-bold text-blue-600" x-text="currentScrape.total_flights"></div>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">Avg CPP</div>
+                            <div class="text-2xl font-bold text-green-600" x-text="currentScrape.avg_cpp ? currentScrape.avg_cpp.toFixed(2) : 'N/A'"></div>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">Nonstop</div>
+                            <div class="text-2xl font-bold text-purple-600" x-text="getNonstopCount()"></div>
+                        </div>
+                        <div class="bg-orange-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">Best CPP</div>
+                            <div class="text-2xl font-bold text-orange-600" x-text="getBestCPP()"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison View -->
+                <div x-show="comparisonData" x-cloak class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800">📊 Comparison</h2>
+                        <button @click="comparisonData = null; compareMode = false; compareSelection = []"
+                                class="text-gray-600 hover:text-gray-800">✕ Close</button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <!-- Scrape 1 -->
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold text-gray-700 mb-2">
+                                Scrape #<span x-text="comparisonData?.scrape1?.id"></span>
+                            </h3>
+                            <div class="space-y-1 text-sm">
+                                <div><span class="text-gray-600">Route:</span>
+                                    <span x-text="`${comparisonData?.scrape1?.origin} → ${comparisonData?.scrape1?.destination}`"></span>
+                                </div>
+                                <div><span class="text-gray-600">Date:</span>
+                                    <span x-text="comparisonData?.scrape1?.date"></span>
+                                </div>
+                                <div><span class="text-gray-600">Total Flights:</span>
+                                    <span x-text="comparisonData?.scrape1?.total_flights"></span>
+                                </div>
+                                <div><span class="text-gray-600">Avg CPP:</span>
+                                    <span x-text="comparisonData?.scrape1?.avg_cpp?.toFixed(2)"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scrape 2 -->
+                        <div class="border rounded-lg p-4">
+                            <h3 class="font-semibold text-gray-700 mb-2">
+                                Scrape #<span x-text="comparisonData?.scrape2?.id"></span>
+                            </h3>
+                            <div class="space-y-1 text-sm">
+                                <div><span class="text-gray-600">Route:</span>
+                                    <span x-text="`${comparisonData?.scrape2?.origin} → ${comparisonData?.scrape2?.destination}`"></span>
+                                </div>
+                                <div><span class="text-gray-600">Date:</span>
+                                    <span x-text="comparisonData?.scrape2?.date"></span>
+                                </div>
+                                <div><span class="text-gray-600">Total Flights:</span>
+                                    <span x-text="comparisonData?.scrape2?.total_flights"></span>
+                                </div>
+                                <div><span class="text-gray-600">Avg CPP:</span>
+                                    <span x-text="comparisonData?.scrape2?.avg_cpp?.toFixed(2)"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Diff -->
+                    <div class="mt-4 pt-4 border-t">
+                        <h4 class="font-medium text-gray-700 mb-2">Differences</h4>
+                        <div class="grid grid-cols-3 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-600">Flights:</span>
+                                <span class="ml-2 font-semibold"
+                                      :class="comparisonData?.stats?.total_flights_diff > 0 ? 'text-green-600' : 'text-red-600'"
+                                      x-text="(comparisonData?.stats?.total_flights_diff > 0 ? '+' : '') + comparisonData?.stats?.total_flights_diff"></span>
+                            </div>
+                            <div>
+                                <span class="text-gray-600">Avg CPP:</span>
+                                <span class="ml-2 font-semibold"
+                                      :class="comparisonData?.stats?.avg_cpp_diff > 0 ? 'text-green-600' : 'text-red-600'"
+                                      x-text="(comparisonData?.stats?.avg_cpp_diff > 0 ? '+' : '') + comparisonData?.stats?.avg_cpp_diff?.toFixed(2)"></span>
+                            </div>
+                            <div>
+                                <span class="text-gray-600">Common:</span>
+                                <span class="ml-2 font-semibold" x-text="comparisonData?.stats?.common_flights"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters & Sort -->
+                <div x-show="flights.length > 0" x-cloak class="bg-white rounded-lg shadow-md p-4 mb-6">
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <!-- Sort -->
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-gray-700">Sort by:</label>
+                            <select x-model="sortBy" @change="sortFlights()"
+                                    class="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="cpp_desc">CPP (High to Low)</option>
+                                <option value="cpp_asc">CPP (Low to High)</option>
+                                <option value="price_asc">Price (Low to High)</option>
+                                <option value="price_desc">Price (High to Low)</option>
+                                <option value="duration_asc">Duration (Short to Long)</option>
+                            </select>
+                        </div>
+
+                        <!-- Filter Nonstop -->
+                        <label class="flex items-center gap-2 text-sm">
+                            <input type="checkbox" x-model="filterNonstop" @change="applyFilters()" class="rounded">
+                            <span class="text-gray-700">Nonstop only</span>
+                        </label>
+
+                        <!-- Search -->
+                        <div class="flex items-center gap-2 ml-auto">
+                            <input type="text" x-model="searchQuery" @input="applyFilters()"
+                                   placeholder="Search flight number..."
+                                   class="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Results -->
+                <div x-show="flights.length > 0" x-cloak class="space-y-4">
+                    <template x-for="(flight, index) in filteredFlights" :key="index">
+                        <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+                            <!-- Flight Header -->
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <span class="text-xl font-bold text-gray-800"
+                                              x-text="flight.segments.map(s => s.flight_number).join(' + ')"></span>
+                                        <span x-show="flight.is_nonstop"
+                                              class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded">
+                                            Nonstop
+                                        </span>
+                                        <span x-show="flight.cpp >= 1.5"
+                                              class="px-2 py-1 badge-excellent text-xs font-semibold rounded">
+                                            Best Value
+                                        </span>
+                                    </div>
+
+                                    <!-- Route Timeline -->
+                                    <div class="flex items-center gap-2 text-sm text-gray-600">
+                                        <span class="font-medium" x-text="flight.segments[0].departure_time"></span>
+                                        <span>→</span>
+                                        <span class="font-medium" x-text="flight.segments[flight.segments.length - 1].arrival_time"></span>
+                                        <span class="text-gray-400">•</span>
+                                        <span x-text="flight.total_duration"></span>
+                                    </div>
+
+                                    <!-- Segments -->
+                                    <div x-show="!flight.is_nonstop" class="mt-2 text-xs text-gray-500">
+                                        <template x-for="(segment, idx) in flight.segments" :key="idx">
+                                            <span>
+                                                <span x-text="segment.flight_number"></span>
+                                                <span x-show="idx < flight.segments.length - 1"> → </span>
+                                            </span>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- CPP Badge -->
+                                <div class="text-right">
+                                    <div class="text-3xl font-bold mb-1"
+                                         :class="{
+                                             'cpp-excellent': flight.cpp >= 1.5,
+                                             'cpp-good': flight.cpp >= 1.2 && flight.cpp < 1.5,
+                                             'cpp-fair': flight.cpp >= 1.0 && flight.cpp < 1.2,
+                                             'cpp-poor': flight.cpp < 1.0
+                                         }"
+                                         x-text="flight.cpp.toFixed(2)"></div>
+                                    <div class="text-xs text-gray-500">CPP</div>
+                                </div>
+                            </div>
+
+                            <!-- Pricing Details -->
+                            <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                                <div>
+                                    <div class="text-sm text-gray-600">Cash Price</div>
+                                    <div class="text-lg font-bold text-gray-800">
+                                        $<span x-text="Math.ceil(flight.cash_price_usd)"></span>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <div class="text-sm text-gray-600">or</div>
+                                </div>
+
+                                <div>
+                                    <div class="text-sm text-gray-600">Award Miles</div>
+                                    <div class="text-lg font-bold text-blue-600">
+                                        <span x-text="flight.points_required.toLocaleString()"></span> pts
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <div class="text-sm text-gray-600">Taxes & Fees</div>
+                                    <div class="text-lg font-semibold text-gray-700">
+                                        $<span x-text="Math.ceil(flight.taxes_fees_usd)"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Value Recommendation -->
+                            <div class="mt-3 p-3 rounded"
+                                 :class="{
+                                     'bg-green-50': flight.cpp >= 1.5,
+                                     'bg-blue-50': flight.cpp >= 1.2 && flight.cpp < 1.5,
+                                     'bg-yellow-50': flight.cpp >= 1.0 && flight.cpp < 1.2,
+                                     'bg-red-50': flight.cpp < 1.0
+                                 }">
+                                <span class="text-sm font-medium"
+                                      :class="{
+                                          'text-green-800': flight.cpp >= 1.5,
+                                          'text-blue-800': flight.cpp >= 1.2 && flight.cpp < 1.5,
+                                          'text-yellow-800': flight.cpp >= 1.0 && flight.cpp < 1.2,
+                                          'text-red-800': flight.cpp < 1.0
+                                      }">
+                                    <span x-show="flight.cpp >= 1.5">💎 Excellent value! Use miles for this flight.</span>
+                                    <span x-show="flight.cpp >= 1.2 && flight.cpp < 1.5">👍 Good value for miles redemption.</span>
+                                    <span x-show="flight.cpp >= 1.0 && flight.cpp < 1.2">⚖️ Fair value. Consider your miles balance.</span>
+                                    <span x-show="flight.cpp < 1.0">💰 Better to pay cash and save your miles.</span>
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- No Results After Filter -->
+                    <div x-show="filteredFlights.length === 0 && flights.length > 0" class="bg-white rounded-lg shadow-md p-12 text-center">
+                        <div class="text-gray-400 text-lg mb-2">No flights match your filters</div>
+                        <button @click="resetFilters()" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            Reset Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div x-show="!currentScrape && !isLoading" class="bg-white rounded-lg shadow-md p-12 text-center">
+                    <div class="text-gray-400 text-6xl mb-4">✈️</div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">No Flights to Display</h3>
+                    <p class="text-gray-500">Enter your search criteria and click "Search Flights" to begin</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function appData() {
+            return {
+                // Form data
+                form: {
+                    origin: 'LAX',
+                    destination: 'JFK',
+                    date: '2025-12-15',
+                    passengers: 1,
+                    cabin_class: 'economy'
+                },
+
+                // State
+                isLoading: false,
+                loadingMessage: 'Initializing scrape...',
+                error: null,
+                currentScrape: null,
+                currentJobId: null,
+                pollingInterval: null,
+
+                // History
+                history: [],
+
+                // Flights
+                flights: [],
+                filteredFlights: [],
+
+                // Filters
+                sortBy: 'cpp_desc',
+                filterNonstop: false,
+                searchQuery: '',
+
+                // Comparison
+                compareMode: false,
+                compareSelection: [],
+                comparisonData: null,
+
+                // Initialize
+                init() {
+                    this.loadHistory();
+                    this.loadLatest();
+                },
+
+                // Submit scrape
+                async submitScrape() {
+                    this.error = null;
+                    this.isLoading = true;
+                    this.loadingMessage = 'Initializing scrape...';
+                    this.comparisonData = null;
+
+                    try {
+                        const response = await fetch('/api/scrape', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.form)
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.detail || 'Failed to start scrape');
+                        }
+
+                        const data = await response.json();
+                        this.currentJobId = data.job_id;
+
+                        // Start polling
+                        this.startPolling();
+
+                    } catch (err) {
+                        this.error = err.message;
+                        this.isLoading = false;
+                    }
+                },
+
+                // Start polling for job status
+                startPolling() {
+                    this.pollingInterval = setInterval(async () => {
+                        await this.checkJobStatus();
+                    }, 2000); // Poll every 2 seconds
+                },
+
+                // Check job status
+                async checkJobStatus() {
+                    if (!this.currentJobId) return;
+
+                    try {
+                        const response = await fetch(`/api/scrapes/${this.currentJobId}`);
+                        const data = await response.json();
+
+                        if (data.status === 'running') {
+                            this.loadingMessage = 'Scraping AA.com... This may take 30-60 seconds';
+                        } else if (data.status === 'completed') {
+                            this.currentScrape = data;
+                            this.flights = data.results?.flights || [];
+                            this.sortFlights();
+                            this.isLoading = false;
+                            this.stopPolling();
+                            this.loadHistory(); // Refresh history
+                        } else if (data.status === 'failed') {
+                            this.error = data.error || 'Scrape failed';
+                            this.isLoading = false;
+                            this.stopPolling();
+                        }
+
+                    } catch (err) {
+                        this.error = 'Failed to check job status';
+                        this.isLoading = false;
+                        this.stopPolling();
+                    }
+                },
+
+                // Stop polling
+                stopPolling() {
+                    if (this.pollingInterval) {
+                        clearInterval(this.pollingInterval);
+                        this.pollingInterval = null;
+                    }
+                },
+
+                // Load history
+                async loadHistory() {
+                    try {
+                        const response = await fetch('/api/scrapes?limit=50');
+                        this.history = await response.json();
+                    } catch (err) {
+                        console.error('Failed to load history:', err);
+                    }
+                },
+
+                // Load latest scrape
+                async loadLatest() {
+                    try {
+                        const response = await fetch('/api/scrapes/latest/completed');
+                        if (response.ok) {
+                            const data = await response.json();
+                            this.currentScrape = data;
+                            this.flights = data.results?.flights || [];
+                            this.sortFlights();
+                        }
+                    } catch (err) {
+                        // No latest scrape, that's okay
+                    }
+                },
+
+                // Load specific scrape
+                async loadScrape(id) {
+                    if (this.compareMode) {
+                        // Add to comparison selection
+                        if (this.compareSelection.includes(id)) {
+                            this.compareSelection = this.compareSelection.filter(x => x !== id);
+                        } else if (this.compareSelection.length < 2) {
+                            this.compareSelection.push(id);
+                        }
+                    } else {
+                        // Normal load
+                        try {
+                            const response = await fetch(`/api/scrapes/${id}`);
+                            const data = await response.json();
+
+                            if (data.status === 'completed') {
+                                this.currentScrape = data;
+                                this.flights = data.results?.flights || [];
+                                this.sortFlights();
+                                this.comparisonData = null;
+                            } else {
+                                this.error = `Scrape is ${data.status}`;
+                            }
+                        } catch (err) {
+                            this.error = 'Failed to load scrape';
+                        }
+                    }
+                },
+
+                // Toggle compare mode
+                toggleCompareMode() {
+                    this.compareMode = !this.compareMode;
+                    if (!this.compareMode) {
+                        this.compareSelection = [];
+                    }
+                },
+
+                // Perform comparison
+                async performComparison() {
+                    if (this.compareSelection.length !== 2) return;
+
+                    try {
+                        const ids = this.compareSelection.join(',');
+                        const response = await fetch(`/api/compare?ids=${ids}`);
+                        this.comparisonData = await response.json();
+                        this.compareMode = false;
+                        this.compareSelection = [];
+                    } catch (err) {
+                        this.error = 'Failed to compare scrapes';
+                    }
+                },
+
+                // Sort flights
+                sortFlights() {
+                    const flights = [...this.flights];
+
+                    switch(this.sortBy) {
+                        case 'cpp_desc':
+                            flights.sort((a, b) => b.cpp - a.cpp);
+                            break;
+                        case 'cpp_asc':
+                            flights.sort((a, b) => a.cpp - b.cpp);
+                            break;
+                        case 'price_asc':
+                            flights.sort((a, b) => a.cash_price_usd - b.cash_price_usd);
+                            break;
+                        case 'price_desc':
+                            flights.sort((a, b) => b.cash_price_usd - a.cash_price_usd);
+                            break;
+                        case 'duration_asc':
+                            flights.sort((a, b) => {
+                                const aDur = this.parseDuration(a.total_duration);
+                                const bDur = this.parseDuration(b.total_duration);
+                                return aDur - bDur;
+                            });
+                            break;
+                    }
+
+                    this.flights = flights;
+                    this.applyFilters();
+                },
+
+                // Apply filters
+                applyFilters() {
+                    let filtered = [...this.flights];
+
+                    // Filter nonstop
+                    if (this.filterNonstop) {
+                        filtered = filtered.filter(f => f.is_nonstop);
+                    }
+
+                    // Search by flight number
+                    if (this.searchQuery) {
+                        const query = this.searchQuery.toUpperCase();
+                        filtered = filtered.filter(f =>
+                            f.segments.some(s => s.flight_number.includes(query))
+                        );
+                    }
+
+                    this.filteredFlights = filtered;
+                },
+
+                // Reset filters
+                resetFilters() {
+                    this.filterNonstop = false;
+                    this.searchQuery = '';
+                    this.applyFilters();
+                },
+
+                // Parse duration to minutes
+                parseDuration(duration) {
+                    const match = duration.match(/(\d+)h\s*(\d+)m/);
+                    if (!match) return 0;
+                    return parseInt(match[1]) * 60 + parseInt(match[2]);
+                },
+
+                // Get nonstop count
+                getNonstopCount() {
+                    return this.flights.filter(f => f.is_nonstop).length;
+                },
+
+                // Get best CPP
+                getBestCPP() {
+                    if (this.flights.length === 0) return 'N/A';
+                    const best = Math.max(...this.flights.map(f => f.cpp));
+                    return best.toFixed(2);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

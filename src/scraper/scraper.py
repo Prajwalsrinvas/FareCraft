@@ -1,25 +1,84 @@
 """
-Refactored American Airlines Flight Scraper Module
+American Airlines Flight Scraper Module
 Hybrid approach: Camoufox (Firefox) for cookie generation → curl_cffi for fast API requests
 """
 
 import concurrent.futures
-import threading
+import json
+import os
+import re
+import sys
 import time
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 from camoufox.sync_api import Camoufox
 from curl_cffi import requests
+from loguru import logger
+
+# Add parent directory to path to import database module
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from api.database import (clean_old_cookie_cache, get_latest_cookie_cache,
+                          init_db, save_cookie_cache)
+
+# Configure loguru logging
+log_dir = Path(__file__).parent.parent.parent / "logs"
+log_dir.mkdir(exist_ok=True)
+log_file = log_dir / f"{datetime.now().strftime('%Y-%m-%d')}.log"
+
+# Remove default handler and add file handler with rotation
+logger.remove()
+logger.add(
+    log_file,
+    format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {message}",
+    level="DEBUG",
+    rotation="100 MB",
+    retention="7 days",
+)
+# Also add console output for immediate feedback
+logger.add(
+    sys.stdout,
+    format="<green>{time:HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <level>{message}</level>",
+    level="INFO",
+    colorize=True,
+)
+
+# Initialize database schema (creates tables if they don't exist)
+init_db()
 
 
-# Debug logging
-def log_debug(message: str) -> None:
-    """Enhanced debug logging with thread info"""
-    thread_id: int | None = threading.current_thread().ident
-    thread_name: str = threading.current_thread().name
-    timestamp: str = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-    print(f"[{timestamp}] [Thread-{thread_id}:{thread_name}] {message}")
+def extract_expiration_from_abck(abck: str) -> int | None:
+    """
+    Extract expiration timestamp from _abck cookie.
+
+    NOTE: The _abck cookie from Camoufox (initial generation) does NOT contain
+    a timestamp. The timestamp appears in the _abck cookie AFTER making the
+    first API request to the itinerary endpoint. At that point, the format is:
+    [blob]~-1~-1~1762511355~[blob] with timestamp at position 5.
+
+    For initial cookie generation, we return None and use fallback expiry.
+    After the first API call, we update expiration using sessionExpirationTime
+    from the API response.
+
+    Args:
+        abck: The _abck cookie value
+
+    Returns:
+        Unix timestamp in seconds, or None if not found
+    """
+    # Try to find timestamp pattern ~[10-digit-number]~
+    match = re.search(r"~(\d{10})~", abck)
+    if match:
+        timestamp = int(match.group(1))
+        # Verify it starts with "17" (valid for 2020s-2030s)
+        if str(timestamp).startswith("17"):
+            logger.debug(f"Found timestamp in _abck cookie: {timestamp}")
+            return timestamp
+
+    # No timestamp found - expected for fresh Camoufox cookies
+    logger.debug("No timestamp in _abck cookie (expected for fresh cookies)")
+    return None
 
 
 def get_akamai_cookies() -> dict[str, str]:
@@ -27,7 +86,7 @@ def get_akamai_cookies() -> dict[str, str]:
     Generate valid Akamai cookies using Camoufox (stealth Firefox).
     Returns dictionary of cookie name:value pairs.
     """
-    log_debug("🦊 START: Launching Camoufox to bypass Akamai Bot Manager...")
+    logger.info("🦊 START: Launching Camoufox to bypass Akamai Bot Manager...")
     cookie_gen_start = time.time()
 
     with Camoufox(headless=True) as browser:
@@ -37,14 +96,14 @@ def get_akamai_cookies() -> dict[str, str]:
         # Why: Booking page generates MORE cookies than homepage (spa_session_id, dtPC)
         #      which are validated by API endpoints to detect bots
         # This generates: _abck, spa_session_id, dtPC, and other tracking cookies
-        log_debug("🌐 Loading aa.com booking search page...")
+        logger.debug("🌐 Loading aa.com booking search page...")
         search_url = "https://www.aa.com/booking/search?locale=en_US&fareType=Lowest&pax=1&adult=1&type=OneWay&searchType=Revenue&cabin=&carriers=ALL&travelType=personal&slices=%5B%7B%22orig%22:%22LAX%22,%22origNearby%22:false,%22dest%22:%22JFK%22,%22destNearby%22:false,%22date%22:%222025-12-15%22%7D%5D"
         page.goto(search_url, wait_until="networkidle")
 
         # Wait for Akamai sensor to execute and generate cookies
         # Why: Akamai Bot Manager sensor takes 8-12 seconds to complete fingerprinting
         #      Rushing this results in untrusted cookies (~0~ instead of ~-1~)
-        log_debug("⏳ Waiting for Akamai sensor (10s)...")
+        logger.debug("⏳ Waiting for Akamai sensor (10s)...")
         time.sleep(10)
 
         # Simulate human behavior to ensure sensor completion
@@ -68,17 +127,124 @@ def get_akamai_cookies() -> dict[str, str]:
     abck_preview = abck[:50] + "..." if len(abck) > 50 else abck
 
     if "~-1~" in abck:
-        log_debug(f"✅ Akamai cookies generated successfully in {cookie_gen_time:.2f}s")
-        log_debug(f"   Total cookies: {len(cookie_dict)}")
-        log_debug(f"   _abck preview: {abck_preview}")
-        log_debug(
+        logger.info(
+            f"✅ Akamai cookies generated successfully in {cookie_gen_time:.2f}s"
+        )
+        logger.debug(f"   Total cookies: {len(cookie_dict)}")
+        logger.debug(f"   _abck preview: {abck_preview}")
+        logger.debug(
             f"   XSRF-TOKEN: {'Present' if 'XSRF-TOKEN' in cookie_dict else 'MISSING'}"
         )
     else:
-        log_debug("⚠️  WARNING: _abck cookie may not be fully trusted!")
-        log_debug(f"   _abck value: {abck_preview}")
+        logger.warning("⚠️  WARNING: _abck cookie may not be fully trusted!")
+        logger.debug(f"   _abck value: {abck_preview}")
 
     return cookie_dict
+
+
+def get_cached_cookies() -> dict[str, str]:
+    """
+    Get cached cookies or fetch fresh if expired/missing.
+
+    Checks database for valid cached cookies. If cookies expire within 5 minutes
+    or don't exist, fetches fresh cookies from browser.
+
+    Returns:
+        Dictionary of cookie name-value pairs
+    """
+    BUFFER_SECONDS = 300  # 5 minutes
+
+    # Try to get cached cookies
+    cached = get_latest_cookie_cache()
+    current_time = int(time.time())
+
+    if cached:
+        expiration = cached["expiration_timestamp"]
+        time_remaining = expiration - current_time
+
+        if time_remaining > BUFFER_SECONDS:
+            # Cookies still valid, use cached
+            minutes_left = time_remaining / 60
+            logger.info(f"✅ Using cached cookies (expires in {minutes_left:.1f}m)")
+            return json.loads(cached["cookies_json"])
+        else:
+            # Cookies expiring soon
+            logger.info(f"🔄 Cookies expire in {time_remaining}s, fetching fresh...")
+    else:
+        logger.info("🆕 No cached cookies found, fetching fresh...")
+
+    # Fetch fresh cookies
+    cookies = get_akamai_cookies()
+
+    # Extract expiration timestamp
+    abck = cookies.get("_abck", "")
+    expiration_timestamp = extract_expiration_from_abck(abck)
+
+    if not expiration_timestamp:
+        # Fallback: 1 hour from now (will be updated after first API call)
+        expiration_timestamp = current_time + 3600
+        logger.debug(
+            f"Using fallback expiration: {expiration_timestamp} (will update from API response)"
+        )
+
+    # Save to cache
+    save_cookie_cache(cookies, expiration_timestamp)
+    logger.debug(f"Saved cookies to cache with expiration: {expiration_timestamp}")
+
+    # Clean up old entries (keep last 5)
+    clean_old_cookie_cache(keep_last_n=5)
+
+    return cookies
+
+
+def update_cookie_expiration_from_response(response_data: dict) -> None:
+    """
+    Update cached cookie expiration with sessionExpirationTime from API response.
+
+    The API response contains the actual session expiration time, which is more
+    accurate than the fallback 1-hour expiry used during initial cookie generation.
+
+    Args:
+        response_data: API response dictionary containing sessionExpirationTime
+    """
+    try:
+        # Extract sessionExpirationTime from response
+        session_expiry_ms = response_data.get("responseMetadata", {}).get(
+            "sessionExpirationTime"
+        )
+
+        if session_expiry_ms:
+            # Convert from milliseconds to seconds
+            session_expiry_sec = int(session_expiry_ms / 1000)
+
+            # Update the most recent cache entry
+            import sqlite3
+
+            from api.database import DATABASE_PATH
+
+            conn = sqlite3.connect(DATABASE_PATH)
+            cursor = conn.execute(
+                """
+                UPDATE cookie_cache
+                SET expiration_timestamp = ?
+                WHERE id = (SELECT MAX(id) FROM cookie_cache)
+                """,
+                (session_expiry_sec,),
+            )
+            conn.commit()
+            conn.close()
+
+            if cursor.rowcount > 0:
+                minutes_remaining = (session_expiry_sec - int(time.time())) // 60
+                logger.info(
+                    f"✅ Updated cookie expiration from API: {session_expiry_sec} ({minutes_remaining}m remaining)"
+                )
+        else:
+            logger.debug(
+                "No sessionExpirationTime in API response, keeping fallback expiry"
+            )
+    except Exception as e:
+        logger.warning(f"Failed to update cookie expiration from API: {e}")
 
 
 def fetch_flights(
@@ -103,23 +269,23 @@ def fetch_flights(
     Returns:
         List of flight objects
     """
-    log_debug(f"🚀 START: Fetching {search_type} pricing for {origin}->{destination}")
+    logger.info(f"🚀 START: Fetching {search_type} pricing for {origin}->{destination}")
     fetch_start = time.time()
 
     try:
         # Create session with Firefox impersonation to match Camoufox
         # Why: Must match Camoufox's Firefox version to avoid fingerprint inconsistencies
         #      AA.com compares TLS fingerprint with User-Agent; mismatches = bot detection
-        log_debug("   Creating curl_cffi Session with firefox133 impersonation...")
+        logger.debug("   Creating curl_cffi Session with firefox133 impersonation...")
         session = requests.Session(impersonate="firefox133")
-        log_debug("   ✓ Session created successfully")
+        logger.debug("   ✓ Session created successfully")
 
         # Inject all cookies from Camoufox
-        log_debug(f"   Injecting {len(cookies)} cookies into session...")
+        logger.debug(f"   Injecting {len(cookies)} cookies into session...")
         abck_in_cookies = "_abck" in cookies
         for name, value in cookies.items():
             session.cookies.set(name, value, domain="aa.com")
-        log_debug(f"   ✓ Cookies injected (_abck present: {abck_in_cookies})")
+        logger.debug(f"   ✓ Cookies injected (_abck present: {abck_in_cookies})")
 
         # Headers matching Firefox
         headers = {
@@ -179,7 +345,7 @@ def fetch_flights(
             },
         }
 
-        log_debug("   Sending POST request to AA API...")
+        logger.debug("   Sending POST request to AA API...")
         request_start = time.time()
 
         response = session.post(
@@ -190,15 +356,15 @@ def fetch_flights(
         )
 
         request_time = time.time() - request_start
-        log_debug(f"   ✓ Response received in {request_time:.2f}s")
-        log_debug(f"   Response status: {response.status_code}")
+        logger.debug(f"   ✓ Response received in {request_time:.2f}s")
+        logger.debug(f"   Response status: {response.status_code}")
 
         if response.status_code != 200:
-            log_debug(f"   ❌ ERROR: Non-200 status code: {response.status_code}")
-            log_debug(f"   Response headers: {dict(response.headers)}")
+            logger.error(f"   ❌ ERROR: Non-200 status code: {response.status_code}")
+            logger.debug(f"   Response headers: {dict(response.headers)}")
             try:
                 response_text = response.text[:500]
-                log_debug(f"   Response body preview: {response_text}")
+                logger.debug(f"   Response body preview: {response_text}")
             except Exception:
                 pass
             raise Exception(
@@ -208,8 +374,12 @@ def fetch_flights(
         data = response.json()
         flights = data.get("slices", [])
 
+        # Update cookie expiration with actual session time from API response
+        # Both Award and Revenue calls may update this, but it's the same value
+        update_cookie_expiration_from_response(data)
+
         total_time = time.time() - fetch_start
-        log_debug(
+        logger.info(
             f"✅ SUCCESS: {search_type} completed in {total_time:.2f}s - {len(flights)} flights retrieved"
         )
 
@@ -217,12 +387,12 @@ def fetch_flights(
 
     except Exception as e:
         total_time = time.time() - fetch_start
-        log_debug(f"❌ EXCEPTION in fetch_flights after {total_time:.2f}s:")
-        log_debug(f"   Exception type: {type(e).__name__}")
-        log_debug(f"   Exception message: {str(e)}")
+        logger.error(f"❌ EXCEPTION in fetch_flights after {total_time:.2f}s:")
+        logger.error(f"   Exception type: {type(e).__name__}")
+        logger.error(f"   Exception message: {str(e)}")
         import traceback
 
-        log_debug(f"   Traceback: {traceback.format_exc()}")
+        logger.debug(f"   Traceback: {traceback.format_exc()}")
         raise
 
 
@@ -327,7 +497,7 @@ def match_and_process_flights(
     Match Award and Cash flights by hash, extract Main cabin pricing, calculate CPP.
     Returns list of processed flights ready for JSON output.
     """
-    log_debug(
+    logger.info(
         f"🔍 Matching {len(award_flights)} award flights with {len(cash_flights)} cash flights..."
     )
 
@@ -337,7 +507,7 @@ def match_and_process_flights(
 
     # Find common hashes
     common_hashes = set(award_map.keys()) & set(cash_map.keys())
-    log_debug(f"   Found {len(common_hashes)} matching hashes")
+    logger.debug(f"   Found {len(common_hashes)} matching hashes")
 
     results = []
     skipped = 0
@@ -379,7 +549,7 @@ def match_and_process_flights(
 
         results.append(flight_obj)
 
-    log_debug(
+    logger.info(
         f"✅ Processed {len(results)} flights with Main cabin pricing (skipped {skipped} without Main)"
     )
     return results
@@ -401,24 +571,24 @@ def scrape_flights(
     Returns:
         Dictionary with search_metadata, flights, and total_results
     """
-    log_debug("=" * 70)
-    log_debug(f"SCRAPE START: {origin} → {destination} on {date}")
-    log_debug("=" * 70)
+    logger.info("=" * 70)
+    logger.info(f"SCRAPE START: {origin} → {destination} on {date}")
+    logger.info("=" * 70)
     overall_start = time.time()
 
-    # Step 1: Generate Akamai cookies
-    log_debug("STEP 1: Generate Akamai cookies")
-    cookies = get_akamai_cookies()
+    # Step 1: Get cookies (cached or fresh)
+    logger.info("STEP 1: Get Akamai cookies")
+    cookies = get_cached_cookies()
     cookie_time = time.time() - overall_start
-    log_debug(f"STEP 1 COMPLETE: Cookies generated in {cookie_time:.2f}s")
+    logger.info(f"STEP 1 COMPLETE: Cookies ready in {cookie_time:.2f}s")
 
     # Step 2: Fetch Award and Revenue data concurrently
-    log_debug("STEP 2: Fetch flight data from AA.com API (concurrent)")
-    log_debug(f"   Time since cookie generation: {time.time() - overall_start:.2f}s")
+    logger.info("STEP 2: Fetch flight data from AA.com API (concurrent)")
+    logger.debug(f"   Time since cookie retrieval: {time.time() - overall_start:.2f}s")
 
     api_start = time.time()
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        log_debug("   Submitting Award and Revenue tasks to ThreadPoolExecutor...")
+        logger.debug("   Submitting Award and Revenue tasks to ThreadPoolExecutor...")
         award_future = executor.submit(
             fetch_flights, cookies, "Award", origin, destination, date, passengers
         )
@@ -426,17 +596,17 @@ def scrape_flights(
             fetch_flights, cookies, "Revenue", origin, destination, date, passengers
         )
 
-        log_debug("   Waiting for futures to complete...")
+        logger.debug("   Waiting for futures to complete...")
         award_flights = award_future.result()
         cash_flights = cash_future.result()
 
     api_time = time.time() - api_start
-    log_debug(f"STEP 2 COMPLETE: Both API calls completed in {api_time:.2f}s")
+    logger.info(f"STEP 2 COMPLETE: Both API calls completed in {api_time:.2f}s")
 
     # Step 3: Match flights and extract Main cabin pricing
-    log_debug("STEP 3: Match flights and extract Main cabin pricing")
+    logger.info("STEP 3: Match flights and extract Main cabin pricing")
     matched_flights = match_and_process_flights(award_flights, cash_flights)
-    log_debug(f"STEP 3 COMPLETE: Matched {len(matched_flights)} flights")
+    logger.info(f"STEP 3 COMPLETE: Matched {len(matched_flights)} flights")
 
     # Step 4: Build output
     output = {
@@ -452,10 +622,10 @@ def scrape_flights(
     }
 
     total_time = time.time() - overall_start
-    log_debug("=" * 70)
-    log_debug(
+    logger.info("=" * 70)
+    logger.info(
         f"✅ SCRAPE COMPLETE in {total_time:.2f}s! Found {len(matched_flights)} flights"
     )
-    log_debug("=" * 70)
+    logger.info("=" * 70)
 
     return output

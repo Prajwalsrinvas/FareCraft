@@ -61,6 +61,24 @@ def init_db() -> None:
         """
         )
 
+        # Cookie cache table for Akamai cookies
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS cookie_cache (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                cookies_json TEXT NOT NULL,
+                expiration_timestamp INTEGER NOT NULL,
+                created_at TEXT NOT NULL,
+                is_valid INTEGER DEFAULT 1
+            )
+        """
+        )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_expiration ON cookie_cache(expiration_timestamp DESC)
+        """
+        )
+
 
 def create_scrape(
     origin: str, destination: str, date: str, passengers: int, cabin_class: str
@@ -264,3 +282,65 @@ def get_current_job_id() -> int | None:
     """Get the ID of the currently running job, if any"""
     scrape = get_running_scrape()
     return scrape["id"] if scrape else None
+
+
+# Cookie cache functions
+def save_cookie_cache(cookies: dict[str, str], expiration_timestamp: int) -> None:
+    """
+    Save cookies to cache with expiration timestamp.
+
+    Args:
+        cookies: Dictionary of cookie name-value pairs
+        expiration_timestamp: Unix timestamp in seconds when cookies expire
+    """
+    with get_db() as conn:
+        conn.execute(
+            """
+            INSERT INTO cookie_cache (cookies_json, expiration_timestamp, created_at, is_valid)
+            VALUES (?, ?, ?, 1)
+            """,
+            (json.dumps(cookies), expiration_timestamp, datetime.utcnow().isoformat()),
+        )
+
+
+def get_latest_cookie_cache() -> dict[str, Any] | None:
+    """
+    Get the most recent valid cookie cache entry.
+
+    Returns:
+        Dictionary with cookies_json, expiration_timestamp, created_at or None
+    """
+    with get_db() as conn:
+        row = conn.execute(
+            """
+            SELECT cookies_json, expiration_timestamp, created_at
+            FROM cookie_cache
+            WHERE is_valid = 1
+            ORDER BY id DESC
+            LIMIT 1
+            """
+        ).fetchone()
+        if row:
+            return dict(row)
+        return None
+
+
+def clean_old_cookie_cache(keep_last_n: int = 5) -> None:
+    """
+    Delete old cookie cache entries, keeping only the last N entries.
+
+    Args:
+        keep_last_n: Number of most recent entries to keep (default 5)
+    """
+    with get_db() as conn:
+        conn.execute(
+            """
+            DELETE FROM cookie_cache
+            WHERE id NOT IN (
+                SELECT id FROM cookie_cache
+                ORDER BY id DESC
+                LIMIT ?
+            )
+            """,
+            (keep_last_n,),
+        )

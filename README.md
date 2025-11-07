@@ -5,7 +5,29 @@
 
 ## 🏆 Contest Submission
 
-**Docker Image:** `prajwalsrinivas7/farecraft:latest` 
+**Docker Image:** [prajwalsrinivas7/farecraft:latest](https://hub.docker.com/repository/docker/prajwalsrinivas7/farecraft/general)
+
+## Demo Videos
+
+<table>
+  <tr>
+    <td align="center"><b>FareCraft Frontend</b></td>
+    <td align="center"><b>MCP Integration</b></td>
+  </tr>
+  <tr>
+    <td>
+      <video src="https://github.com/user-attachments/assets/507951ae-f222-46d6-b281-448b759a05a4" width="100%" controls>
+        Your browser does not support the video tag.
+      </video>
+    </td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/7dc35337-c80b-4399-876d-ed1c0c4595c3" width="100%" controls>
+        Your browser does not support the video tag.
+      </video>
+    </td>
+  </tr>
+</table>
+
 
 ---
 
@@ -640,3 +662,4 @@ Built with ❤️ for the Web Scraping Contest - November 2025
 ## 📄 License
 
 This project is submitted for educational purposes as part of the Web Scraping Coding Contest.
+

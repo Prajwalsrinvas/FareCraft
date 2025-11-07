@@ -20,9 +20,10 @@ logs/
 # Output files
 output.json
 
-# Test files
+# Test files and experiments
 test_*.py
 *_test.py
+experiments/
 
 # Git
 .git/
@@ -55,6 +56,4 @@ Thumbs.db
 sql-studio
 camoufox/
 curl_cffi/
-comparison_*.json
-comparison_*.log
 *.png

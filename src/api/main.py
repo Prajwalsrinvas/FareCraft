@@ -49,7 +49,6 @@ def run_scrape_job(
     destination: str,
     date: str,
     passengers: int,
-    cabin_class: str,
 ):
     """
     Background task to run the scraping job.
@@ -63,7 +62,8 @@ def run_scrape_job(
             return
 
         # Run scraper (status is already set to 'running' by try_start_scrape)
-        results = scrape_flights(origin, destination, date, passengers, cabin_class)
+        # Always scrape Main cabin (economy class) as per contest requirements
+        results = scrape_flights(origin, destination, date, passengers, "economy")
 
         # Save results
         complete_scrape(job_id, results)
@@ -106,13 +106,13 @@ async def trigger_scrape(request: ScrapeRequest, background_tasks: BackgroundTas
                 detail=f"Another scrape (job {running_job['id']}) is already running. Please wait.",
             )
 
-    # Create job in database
+    # Create job in database (hardcode economy/Main cabin)
     job_id = create_scrape(
         request.origin,
         request.destination,
         request.date,
         request.passengers,
-        request.cabin_class,
+        "economy",  # Always Main cabin
     )
 
     # Start background task
@@ -123,7 +123,6 @@ async def trigger_scrape(request: ScrapeRequest, background_tasks: BackgroundTas
         request.destination,
         request.date,
         request.passengers,
-        request.cabin_class,
     )
 
     return ScrapeResponse(

@@ -5,7 +5,6 @@ Hybrid approach: Camoufox (Firefox) for cookie generation → curl_cffi for fast
 
 import concurrent.futures
 import json
-import os
 import random
 import sys
 import time
@@ -19,8 +18,6 @@ from loguru import logger
 from tenacity import (RetryError, retry, retry_if_exception_type,
                       stop_after_attempt, wait_exponential)
 
-# Add parent directory to path to import database module
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from api.database import (clean_old_cookie_cache, get_latest_cookie_cache,
                           init_db, save_cookie_cache)
 
@@ -529,11 +526,16 @@ def calculate_cpp(cash_price: float, taxes: float, points: int) -> float:
 
 
 def match_and_process_flights(
-    award_flights: list[dict], cash_flights: list[dict]
+    award_flights: list[dict], cash_flights: list[dict], passengers: int
 ) -> list[dict]:
     """
     Match Award and Cash flights by hash, extract Main cabin pricing, calculate CPP.
     Returns list of processed flights ready for JSON output.
+
+    Args:
+        award_flights: List of award flight data
+        cash_flights: List of revenue flight data
+        passengers: Number of passengers (needed to multiply per-passenger award pricing)
     """
     logger.info(
         f"🔍 Matching {len(award_flights)} award flights with {len(cash_flights)} cash flights..."
@@ -555,13 +557,18 @@ def match_and_process_flights(
         cash_flight = cash_map[hash_key]
 
         # Extract Main cabin pricing
-        points, award_taxes = extract_main_cabin_award(award_flight)
+        # Note: Award API returns PER PASSENGER values, Cash API returns TOTAL values
+        points_per_pax, award_taxes_per_pax = extract_main_cabin_award(award_flight)
         cash_price, cash_taxes = extract_main_cabin_cash(cash_flight)
 
         # Skip if Main cabin not available
-        if points is None or cash_price is None:
+        if points_per_pax is None or cash_price is None:
             skipped += 1
             continue
+
+        # Multiply per-passenger award values by number of passengers
+        points = points_per_pax * passengers
+        award_taxes = award_taxes_per_pax * passengers if award_taxes_per_pax else None
 
         # Use taxes from award response (preferred for CPP calculation)
         # Why: Award booking taxes are more accurate since they're what you actually pay
@@ -699,7 +706,9 @@ def scrape_flights(
 
             # Step 3: Match flights and extract Main cabin pricing
             logger.info("STEP 3: Match flights and extract Main cabin pricing")
-            matched_flights = match_and_process_flights(award_flights, cash_flights)
+            matched_flights = match_and_process_flights(
+                award_flights, cash_flights, passengers
+            )
             logger.info(f"STEP 3 COMPLETE: Matched {len(matched_flights)} flights")
 
             # Step 4: Build output

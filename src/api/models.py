@@ -12,7 +12,6 @@ class ScrapeRequest(BaseModel):
     destination: str = Field(..., example="JFK")
     date: str = Field(..., example="2025-12-15")
     passengers: int = Field(1, ge=1, le=9)
-    cabin_class: str = Field("economy", pattern="^(economy|business|first)$")
 
 
 class ScrapeResponse(BaseModel):

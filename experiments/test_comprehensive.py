@@ -8,10 +8,10 @@ import sys
 import time
 from pathlib import Path
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+# Add src to path (now in experiments folder, go up one level)
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from scraper.scraper import scrape_flights
+from scraper.scraper import scrape_flights  # Uses pure parallel (production default)
 
 
 def test_1_fresh_scrape():

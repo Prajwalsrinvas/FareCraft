@@ -8,12 +8,12 @@ import sys
 import time
 from pathlib import Path
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+# Add src to path (now in experiments folder, go up one level)
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 # Import all 3 versions
-from scraper.scraper import scrape_flights as scrape_sequential
-from scraper.scraper_parallel import scrape_flights as scrape_parallel
+from scraper.scraper_sequential import scrape_flights as scrape_sequential
+from scraper.scraper import scrape_flights as scrape_parallel  # Default is pure parallel
 from scraper.scraper_staggered import scrape_flights as scrape_staggered
 from api.database import init_db
 

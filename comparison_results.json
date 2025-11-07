@@ -1,0 +1,69 @@
+{
+  "results": [
+    {
+      "name": "SEQUENTIAL",
+      "description": "Award request completes, delay, then Revenue request starts",
+      "tests_passed": 2,
+      "tests_total": 2,
+      "times": [
+        12.659749984741211,
+        6.105493068695068,
+        5.781582355499268,
+        5.6704113483428955
+      ],
+      "cached_times": [
+        6.105493068695068,
+        5.781582355499268,
+        5.6704113483428955
+      ],
+      "errors": [],
+      "avg_cached": 5.852495590845744,
+      "min_cached": 5.6704113483428955,
+      "max_cached": 6.105493068695068
+    },
+    {
+      "name": "PURE PARALLEL",
+      "description": "Award and Revenue start at exact same millisecond",
+      "tests_passed": 2,
+      "tests_total": 2,
+      "times": [
+        9.471144437789917,
+        3.5999388694763184,
+        2.9888756275177,
+        3.4797682762145996
+      ],
+      "cached_times": [
+        3.5999388694763184,
+        2.9888756275177,
+        3.4797682762145996
+      ],
+      "errors": [],
+      "avg_cached": 3.356194257736206,
+      "min_cached": 2.9888756275177,
+      "max_cached": 3.5999388694763184
+    },
+    {
+      "name": "STAGGERED PARALLEL",
+      "description": "Award starts, 0.2-1.0s delay, Revenue starts (both run concurrently)",
+      "tests_passed": 2,
+      "tests_total": 2,
+      "times": [
+        10.190637588500977,
+        3.8672022819519043,
+        4.100908517837524,
+        4.154001712799072
+      ],
+      "cached_times": [
+        3.8672022819519043,
+        4.100908517837524,
+        4.154001712799072
+      ],
+      "errors": [],
+      "avg_cached": 4.040704170862834,
+      "min_cached": 3.8672022819519043,
+      "max_cached": 4.154001712799072
+    }
+  ],
+  "total_time_seconds": 113.2627272605896,
+  "timestamp": "2025-11-07 21:48:19"
+}

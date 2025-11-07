@@ -3,9 +3,9 @@ American Airlines Flight Scraper Module
 Hybrid approach: Camoufox (Firefox) for cookie generation → curl_cffi for fast API requests
 """
 
-import concurrent.futures
 import json
 import os
+import random
 import sys
 import time
 from datetime import datetime
@@ -649,34 +649,26 @@ def scrape_flights(
             cookie_time = time.time() - overall_start
             logger.info(f"STEP 1 COMPLETE: Cookies ready in {cookie_time:.2f}s")
 
-            # Step 2: Fetch Award and Revenue data in parallel
+            # Step 2: Fetch Award and Revenue data sequentially (more human-like)
             # Each fetch_flights call has its own 3-attempt retry with exponential backoff
-            logger.info("STEP 2: Fetch flight data from AA.com API (parallel)")
+            logger.info("STEP 2: Fetch flight data from AA.com API (sequential)")
 
             api_start = time.time()
 
-            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-                award_future = executor.submit(
-                    fetch_flights,
-                    cookies,
-                    "Award",
-                    origin,
-                    destination,
-                    date,
-                    passengers,
-                )
-                cash_future = executor.submit(
-                    fetch_flights,
-                    cookies,
-                    "Revenue",
-                    origin,
-                    destination,
-                    date,
-                    passengers,
-                )
+            # Fetch Award pricing first
+            award_flights = fetch_flights(
+                cookies, "Award", origin, destination, date, passengers
+            )
 
-                award_flights = award_future.result()
-                cash_flights = cash_future.result()
+            # Random delay between requests (0.2s - 1.0s) to mimic human behavior
+            delay = random.uniform(0.2, 1.0)
+            logger.debug(f"   Human-like delay: {delay:.2f}s")
+            time.sleep(delay)
+
+            # Fetch Revenue pricing second
+            cash_flights = fetch_flights(
+                cookies, "Revenue", origin, destination, date, passengers
+            )
 
             api_time = time.time() - api_start
             logger.info(f"STEP 2 COMPLETE: Both API calls completed in {api_time:.2f}s")

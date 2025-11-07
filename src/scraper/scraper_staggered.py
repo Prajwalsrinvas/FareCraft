@@ -6,6 +6,7 @@ Hybrid approach: Camoufox (Firefox) for cookie generation → curl_cffi for fast
 import concurrent.futures
 import json
 import os
+import random
 import sys
 import time
 from datetime import datetime
@@ -649,13 +650,16 @@ def scrape_flights(
             cookie_time = time.time() - overall_start
             logger.info(f"STEP 1 COMPLETE: Cookies ready in {cookie_time:.2f}s")
 
-            # Step 2: Fetch Award and Revenue data in parallel
-            # Each fetch_flights call has its own 3-attempt retry with exponential backoff
-            logger.info("STEP 2: Fetch flight data from AA.com API (parallel)")
+            # Step 2: Fetch Award and Revenue data in staggered parallel
+            # Start first request, delay, then start second (both run concurrently)
+            logger.info(
+                "STEP 2: Fetch flight data from AA.com API (staggered parallel)"
+            )
 
             api_start = time.time()
 
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+                # Start Award request first
                 award_future = executor.submit(
                     fetch_flights,
                     cookies,
@@ -665,6 +669,13 @@ def scrape_flights(
                     date,
                     passengers,
                 )
+
+                # Random delay before starting second request (0.2s - 1.0s)
+                delay = random.uniform(0.2, 1.0)
+                logger.debug(f"   Stagger delay: {delay:.2f}s")
+                time.sleep(delay)
+
+                # Start Revenue request (both now running in parallel)
                 cash_future = executor.submit(
                     fetch_flights,
                     cookies,

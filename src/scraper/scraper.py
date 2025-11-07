@@ -6,7 +6,6 @@ Hybrid approach: Camoufox (Firefox) for cookie generation → curl_cffi for fast
 import concurrent.futures
 import json
 import os
-import re
 import sys
 import time
 from datetime import datetime
@@ -56,37 +55,23 @@ class InvalidCookiesException(Exception):
     pass
 
 
-def extract_expiration_from_abck(abck: str) -> int | None:
+def get_default_cookie_expiration() -> int:
     """
-    Extract expiration timestamp from _abck cookie.
+    Get default cookie expiration timestamp (1 hour from now).
 
     NOTE: The _abck cookie from Camoufox (initial generation) does NOT contain
-    a timestamp. The timestamp appears in the _abck cookie AFTER making the
-    first API request to the itinerary endpoint. At that point, the format is:
-    [blob]~-1~-1~1762511355~[blob] with timestamp at position 5.
+    an expiration timestamp. The timestamp only appears in the _abck cookie AFTER
+    making the first API request to the itinerary endpoint. At that point, the
+    browser's _abck format is: [blob]~-1~-1~1762511355~[blob] with timestamp.
 
-    For initial cookie generation, we return None and use fallback expiry.
-    After the first API call, we update expiration using sessionExpirationTime
-    from the API response.
-
-    Args:
-        abck: The _abck cookie value
+    Since we extract cookies before making API calls, we use a conservative
+    1-hour default. This gets replaced with the actual sessionExpirationTime
+    from the API response after the first successful request.
 
     Returns:
-        Unix timestamp in seconds, or None if not found
+        Unix timestamp in seconds (current time + 1 hour)
     """
-    # Try to find timestamp pattern ~[10-digit-number]~
-    match = re.search(r"~(\d{10})~", abck)
-    if match:
-        timestamp = int(match.group(1))
-        # Verify it starts with "17" (valid for 2020s-2030s)
-        if str(timestamp).startswith("17"):
-            logger.debug(f"Found timestamp in _abck cookie: {timestamp}")
-            return timestamp
-
-    # No timestamp found - expected for fresh Camoufox cookies
-    logger.debug("No timestamp in _abck cookie (expected for fresh cookies)")
-    return None
+    return int(time.time()) + 3600  # 1 hour from now
 
 
 def wait_for_akamai_sensor(browser, max_wait_seconds: int = 15) -> float:
@@ -105,7 +90,7 @@ def wait_for_akamai_sensor(browser, max_wait_seconds: int = 15) -> float:
     start_time = time.time()
     max_iterations = int(max_wait_seconds / 0.5)
 
-    for i in range(max_iterations):
+    for _ in range(max_iterations):
         cookies = browser.contexts[0].cookies()
         cookie_dict = {c["name"]: c["value"] for c in cookies}
         abck = cookie_dict.get("_abck", "")
@@ -142,21 +127,21 @@ def get_akamai_cookies() -> dict[str, str]:
         search_url = "https://www.aa.com/booking/search?locale=en_US&fareType=Lowest&pax=1&adult=1&type=OneWay&searchType=Revenue&cabin=&carriers=ALL&travelType=personal&slices=%5B%7B%22orig%22:%22LAX%22,%22origNearby%22:false,%22dest%22:%22JFK%22,%22destNearby%22:false,%22date%22:%222025-12-15%22%7D%5D"
         page.goto(search_url, wait_until="networkidle", timeout=30000)
 
-        # Simulate human behavior to ensure sensor completion
-        # Why: Mouse movements and scrolling help Akamai's behavioral analysis
-        #      recognize this as a real browser, not a bot
+        # Wait for Akamai sensor to execute and generate cookies
+        # Why: Akamai Bot Manager sensor takes 6-10 seconds to complete fingerprinting
+        #      The sensor must initialize FIRST before it can capture user behavior
+        # Dynamic polling: Check every 500ms for ~-1~ pattern, break early if found
+        wait_for_akamai_sensor(browser, max_wait_seconds=15)
+
+        # Simulate human behavior AFTER sensor completes
+        # Why: Sensor has already marked cookies as trusted, but additional behavior
+        #      helps reinforce legitimacy and may improve cookie lifetime
         page.mouse.move(100, 100)
         time.sleep(0.5)  # Natural pause between movements
         page.mouse.move(300, 200)
         time.sleep(0.5)
         page.evaluate("window.scrollTo(0, 500)")
         time.sleep(1)  # Longer pause after scroll for realism
-
-        # Wait for Akamai sensor to execute and generate cookies
-        # Why: Akamai Bot Manager sensor takes few seconds to complete fingerprinting some times
-        #      Rushing this results in untrusted cookies (~0~ instead of ~-1~)
-        # Dynamic polling: Check every 500ms for ~-1~ pattern, break early if found
-        wait_for_akamai_sensor(browser, max_wait_seconds=15)
 
         # Extract all cookies
         cookies = browser.contexts[0].cookies()
@@ -218,16 +203,11 @@ def get_cached_cookies() -> dict[str, str]:
     # Fetch fresh cookies
     cookies = get_akamai_cookies()
 
-    # Extract expiration timestamp
-    abck = cookies.get("_abck", "")
-    expiration_timestamp = extract_expiration_from_abck(abck)
-
-    if not expiration_timestamp:
-        # Fallback: 1 hour from now (will be updated after first API call)
-        expiration_timestamp = current_time + 3600
-        logger.debug(
-            f"Using fallback expiration: {expiration_timestamp} (will update from API response)"
-        )
+    # Use default 1-hour expiration (will be updated after first API call)
+    expiration_timestamp = get_default_cookie_expiration()
+    logger.debug(
+        f"Using default 1-hour expiration: {expiration_timestamp} (will update from API response)"
+    )
 
     # Save to cache
     save_cookie_cache(cookies, expiration_timestamp)
@@ -661,11 +641,23 @@ def scrape_flights(
                 # First attempt: try cached cookies
                 cookies = get_cached_cookies()
             else:
-                # Retry attempts: force fresh cookie generation
+                # Retry attempts: force fresh cookie generation and cache them
                 logger.warning(
                     "🔄 Previous attempt failed, generating fresh cookies..."
                 )
                 cookies = get_akamai_cookies()
+
+                # Save fresh cookies to cache for future use
+                expiration_timestamp = get_default_cookie_expiration()
+                logger.debug(
+                    f"Using default 1-hour expiration: {expiration_timestamp} (will update from API response)"
+                )
+
+                save_cookie_cache(cookies, expiration_timestamp)
+                clean_old_cookie_cache(keep_last_n=5)
+                logger.debug(
+                    f"Saved retry cookies to cache with expiration: {expiration_timestamp}"
+                )
 
             cookie_time = time.time() - overall_start
             logger.info(f"STEP 1 COMPLETE: Cookies ready in {cookie_time:.2f}s")

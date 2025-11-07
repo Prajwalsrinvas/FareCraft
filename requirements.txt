@@ -3,3 +3,5 @@ uvicorn==0.38.0
 pydantic==2.12.4
 camoufox==0.4.11
 curl-cffi==0.13.0
+loguru==0.7.3
+tenacity==9.1.2

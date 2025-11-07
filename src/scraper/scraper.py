@@ -16,6 +16,8 @@ from typing import Any
 from camoufox.sync_api import Camoufox
 from curl_cffi import requests
 from loguru import logger
+from tenacity import (RetryError, retry, retry_if_exception_type,
+                      stop_after_attempt, wait_exponential)
 
 # Add parent directory to path to import database module
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -46,6 +48,12 @@ logger.add(
 
 # Initialize database schema (creates tables if they don't exist)
 init_db()
+
+
+class InvalidCookiesException(Exception):
+    """Raised when cookies are invalid and need to be regenerated"""
+
+    pass
 
 
 def extract_expiration_from_abck(abck: str) -> int | None:
@@ -81,6 +89,40 @@ def extract_expiration_from_abck(abck: str) -> int | None:
     return None
 
 
+def wait_for_akamai_sensor(browser, max_wait_seconds: int = 15) -> float:
+    """
+    Poll for Akamai sensor completion instead of fixed sleep.
+    Checks every 500ms for ~-1~ pattern in _abck cookie.
+
+    Args:
+        browser: Camoufox browser instance
+        max_wait_seconds: Maximum time to wait (default 15s)
+
+    Returns:
+        Actual wait time in seconds
+    """
+    logger.debug("⏳ Waiting for Akamai sensor (polling every 500ms)...")
+    start_time = time.time()
+    max_iterations = int(max_wait_seconds / 0.5)
+
+    for i in range(max_iterations):
+        cookies = browser.contexts[0].cookies()
+        cookie_dict = {c["name"]: c["value"] for c in cookies}
+        abck = cookie_dict.get("_abck", "")
+
+        if "~-1~" in abck:
+            elapsed = time.time() - start_time
+            logger.debug(f"✓ Akamai sensor completed in {elapsed:.2f}s")
+            return elapsed
+
+        time.sleep(0.5)
+
+    # Timeout reached
+    elapsed = time.time() - start_time
+    logger.warning(f"⚠️  Akamai sensor timeout after {elapsed:.2f}s")
+    return elapsed
+
+
 def get_akamai_cookies() -> dict[str, str]:
     """
     Generate valid Akamai cookies using Camoufox (stealth Firefox).
@@ -98,13 +140,7 @@ def get_akamai_cookies() -> dict[str, str]:
         # This generates: _abck, spa_session_id, dtPC, and other tracking cookies
         logger.debug("🌐 Loading aa.com booking search page...")
         search_url = "https://www.aa.com/booking/search?locale=en_US&fareType=Lowest&pax=1&adult=1&type=OneWay&searchType=Revenue&cabin=&carriers=ALL&travelType=personal&slices=%5B%7B%22orig%22:%22LAX%22,%22origNearby%22:false,%22dest%22:%22JFK%22,%22destNearby%22:false,%22date%22:%222025-12-15%22%7D%5D"
-        page.goto(search_url, wait_until="networkidle")
-
-        # Wait for Akamai sensor to execute and generate cookies
-        # Why: Akamai Bot Manager sensor takes 8-12 seconds to complete fingerprinting
-        #      Rushing this results in untrusted cookies (~0~ instead of ~-1~)
-        logger.debug("⏳ Waiting for Akamai sensor (10s)...")
-        time.sleep(10)
+        page.goto(search_url, wait_until="networkidle", timeout=30000)
 
         # Simulate human behavior to ensure sensor completion
         # Why: Mouse movements and scrolling help Akamai's behavioral analysis
@@ -114,7 +150,13 @@ def get_akamai_cookies() -> dict[str, str]:
         page.mouse.move(300, 200)
         time.sleep(0.5)
         page.evaluate("window.scrollTo(0, 500)")
-        time.sleep(2)  # Longer pause after scroll for realism
+        time.sleep(1)  # Longer pause after scroll for realism
+
+        # Wait for Akamai sensor to execute and generate cookies
+        # Why: Akamai Bot Manager sensor takes few seconds to complete fingerprinting some times
+        #      Rushing this results in untrusted cookies (~0~ instead of ~-1~)
+        # Dynamic polling: Check every 500ms for ~-1~ pattern, break early if found
+        wait_for_akamai_sensor(browser, max_wait_seconds=15)
 
         # Extract all cookies
         cookies = browser.contexts[0].cookies()
@@ -247,6 +289,14 @@ def update_cookie_expiration_from_response(response_data: dict) -> None:
         logger.warning(f"Failed to update cookie expiration from API: {e}")
 
 
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=1, max=10),
+    retry=retry_if_exception_type(
+        (requests.exceptions.RequestException, InvalidCookiesException)
+    ),
+    reraise=True,
+)
 def fetch_flights(
     cookies: dict[str, str],
     search_type: str,
@@ -257,6 +307,7 @@ def fetch_flights(
 ) -> list[dict]:
     """
     Fetch flight data using curl_cffi with Camoufox-generated cookies.
+    Uses tenacity for automatic retry with exponential backoff (3 attempts max).
 
     Args:
         cookies: Dictionary of cookies from Camoufox
@@ -268,6 +319,10 @@ def fetch_flights(
 
     Returns:
         List of flight objects
+
+    Raises:
+        InvalidCookiesException: When cookies are invalid (triggers cookie refresh)
+        requests.exceptions.RequestException: On network/server errors (retried)
     """
     logger.info(f"🚀 START: Fetching {search_type} pricing for {origin}->{destination}")
     fetch_start = time.time()
@@ -359,16 +414,28 @@ def fetch_flights(
         logger.debug(f"   ✓ Response received in {request_time:.2f}s")
         logger.debug(f"   Response status: {response.status_code}")
 
-        if response.status_code != 200:
-            logger.error(f"   ❌ ERROR: Non-200 status code: {response.status_code}")
+        # Handle non-200 responses with appropriate exceptions for retry logic
+        if response.status_code == 429:
+            logger.warning("⚠️  Rate limited (429) - will retry with backoff...")
+            raise InvalidCookiesException("Rate limited - cookies may need refresh")
+        elif response.status_code == 403:
+            logger.warning("⚠️  Forbidden (403) - cookies likely invalid")
+            raise InvalidCookiesException("Forbidden - bad cookies")
+        elif response.status_code >= 500:
+            logger.warning(f"⚠️  Server error ({response.status_code}) - will retry...")
+            raise requests.exceptions.RequestException(
+                f"Server error {response.status_code}"
+            )
+        elif response.status_code != 200:
+            logger.error(f"   ❌ ERROR: Unexpected status {response.status_code}")
             logger.debug(f"   Response headers: {dict(response.headers)}")
             try:
                 response_text = response.text[:500]
                 logger.debug(f"   Response body preview: {response_text}")
             except Exception:
                 pass
-            raise Exception(
-                f"{search_type} request failed with status {response.status_code}"
+            raise InvalidCookiesException(
+                f"Unexpected status {response.status_code} - may need fresh cookies"
             )
 
         data = response.json()
@@ -543,7 +610,7 @@ def match_and_process_flights(
             "total_duration": details["total_duration"],
             "points_required": int(points),
             "cash_price_usd": float(cash_price),
-            "taxes_fees_usd": float(taxes) if taxes else 0,
+            "taxes_fees_usd": float(taxes) if taxes else 0.0,
             "cpp": cpp,
         }
 
@@ -560,6 +627,8 @@ def scrape_flights(
 ) -> dict[str, Any]:
     """
     Main scraping function that orchestrates the entire process.
+    Implements cookie retry strategy: tries cached cookies first, then generates
+    fresh cookies on failure (up to 3 cookie generation attempts total).
 
     Args:
         origin: Origin airport code (e.g., "LAX")
@@ -570,62 +639,198 @@ def scrape_flights(
 
     Returns:
         Dictionary with search_metadata, flights, and total_results
+
+    Raises:
+        Exception: After all retry attempts exhausted
     """
     logger.info("=" * 70)
     logger.info(f"SCRAPE START: {origin} → {destination} on {date}")
     logger.info("=" * 70)
     overall_start = time.time()
 
-    # Step 1: Get cookies (cached or fresh)
-    logger.info("STEP 1: Get Akamai cookies")
-    cookies = get_cached_cookies()
-    cookie_time = time.time() - overall_start
-    logger.info(f"STEP 1 COMPLETE: Cookies ready in {cookie_time:.2f}s")
+    max_cookie_attempts = 3
 
-    # Step 2: Fetch Award and Revenue data concurrently
-    logger.info("STEP 2: Fetch flight data from AA.com API (concurrent)")
-    logger.debug(f"   Time since cookie retrieval: {time.time() - overall_start:.2f}s")
+    for cookie_attempt in range(max_cookie_attempts):
+        try:
+            # Step 1: Get cookies (cached on first attempt, fresh on retries)
+            logger.info(
+                f"STEP 1: Get Akamai cookies (attempt {cookie_attempt + 1}/{max_cookie_attempts})"
+            )
 
-    api_start = time.time()
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        logger.debug("   Submitting Award and Revenue tasks to ThreadPoolExecutor...")
-        award_future = executor.submit(
-            fetch_flights, cookies, "Award", origin, destination, date, passengers
-        )
-        cash_future = executor.submit(
-            fetch_flights, cookies, "Revenue", origin, destination, date, passengers
-        )
+            if cookie_attempt == 0:
+                # First attempt: try cached cookies
+                cookies = get_cached_cookies()
+            else:
+                # Retry attempts: force fresh cookie generation
+                logger.warning(
+                    "🔄 Previous attempt failed, generating fresh cookies..."
+                )
+                cookies = get_akamai_cookies()
 
-        logger.debug("   Waiting for futures to complete...")
-        award_flights = award_future.result()
-        cash_flights = cash_future.result()
+            cookie_time = time.time() - overall_start
+            logger.info(f"STEP 1 COMPLETE: Cookies ready in {cookie_time:.2f}s")
 
-    api_time = time.time() - api_start
-    logger.info(f"STEP 2 COMPLETE: Both API calls completed in {api_time:.2f}s")
+            # Step 2: Fetch Award and Revenue data concurrently
+            # Each fetch_flights call has its own 3-attempt retry with exponential backoff
+            logger.info("STEP 2: Fetch flight data from AA.com API (concurrent)")
+            logger.debug(
+                f"   Time since cookie retrieval: {time.time() - overall_start:.2f}s"
+            )
 
-    # Step 3: Match flights and extract Main cabin pricing
-    logger.info("STEP 3: Match flights and extract Main cabin pricing")
-    matched_flights = match_and_process_flights(award_flights, cash_flights)
-    logger.info(f"STEP 3 COMPLETE: Matched {len(matched_flights)} flights")
+            api_start = time.time()
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+                logger.debug(
+                    "   Submitting Award and Revenue tasks to ThreadPoolExecutor..."
+                )
+                award_future = executor.submit(
+                    fetch_flights,
+                    cookies,
+                    "Award",
+                    origin,
+                    destination,
+                    date,
+                    passengers,
+                )
+                cash_future = executor.submit(
+                    fetch_flights,
+                    cookies,
+                    "Revenue",
+                    origin,
+                    destination,
+                    date,
+                    passengers,
+                )
 
-    # Step 4: Build output
-    output = {
-        "search_metadata": {
-            "origin": origin,
-            "destination": destination,
-            "date": date,
-            "passengers": passengers,
-            "cabin_class": cabin_class,
-        },
-        "flights": matched_flights,
-        "total_results": len(matched_flights),
-    }
+                logger.debug("   Waiting for futures to complete...")
+                award_flights = award_future.result()
+                cash_flights = cash_future.result()
 
-    total_time = time.time() - overall_start
-    logger.info("=" * 70)
-    logger.info(
-        f"✅ SCRAPE COMPLETE in {total_time:.2f}s! Found {len(matched_flights)} flights"
-    )
-    logger.info("=" * 70)
+            api_time = time.time() - api_start
+            logger.info(f"STEP 2 COMPLETE: Both API calls completed in {api_time:.2f}s")
 
-    return output
+            # Step 3: Match flights and extract Main cabin pricing
+            logger.info("STEP 3: Match flights and extract Main cabin pricing")
+            matched_flights = match_and_process_flights(award_flights, cash_flights)
+            logger.info(f"STEP 3 COMPLETE: Matched {len(matched_flights)} flights")
+
+            # Step 4: Build output
+            output = {
+                "search_metadata": {
+                    "origin": origin,
+                    "destination": destination,
+                    "date": date,
+                    "passengers": passengers,
+                    "cabin_class": cabin_class,
+                },
+                "flights": matched_flights,
+                "total_results": len(matched_flights),
+            }
+
+            total_time = time.time() - overall_start
+            logger.info("=" * 70)
+            logger.info(
+                f"✅ SCRAPE COMPLETE in {total_time:.2f}s! Found {len(matched_flights)} flights"
+            )
+            logger.info("=" * 70)
+
+            return output
+
+        except (InvalidCookiesException, RetryError) as e:
+            # Cookie-related failure or all retries exhausted
+            if cookie_attempt == max_cookie_attempts - 1:
+                # Last attempt failed - propagate exception
+                logger.error(f"❌ All {max_cookie_attempts} cookie attempts exhausted")
+                raise Exception(
+                    f"Failed after {max_cookie_attempts} cookie generation attempts"
+                ) from e
+            else:
+                # More attempts available - continue to next iteration
+                logger.warning(f"⚠️  Cookie attempt {cookie_attempt + 1} failed: {e}")
+                logger.info(
+                    f"   Will retry with fresh cookies ({cookie_attempt + 2}/{max_cookie_attempts})..."
+                )
+                continue
+
+        except Exception as e:
+            # Unexpected error - propagate immediately
+            logger.error(f"❌ Unexpected error in scrape_flights: {e}")
+            raise
+
+
+def main() -> int:
+    """
+    Main entry point for standalone scraper execution.
+
+    Returns:
+        0 on success, 1 on failure
+    """
+    logger.info("🚀 American Airlines Scraper - Contest Mode")
+    logger.info(f"📅 Run started at: {datetime.now().isoformat()}")
+
+    # Contest parameters (hardcoded as per requirements)
+    ORIGIN = "LAX"
+    DESTINATION = "JFK"
+    DATE = "2025-12-15"
+    PASSENGERS = 1
+    CABIN_CLASS = "economy"
+
+    try:
+        # Run scraper
+        logger.info(f"🎯 Scraping: {ORIGIN} → {DESTINATION} on {DATE}")
+        output = scrape_flights(ORIGIN, DESTINATION, DATE, PASSENGERS, CABIN_CLASS)
+
+        # Determine output path
+        output_path = Path("output.json")
+
+        # Write to file
+        with open(output_path, "w") as f:
+            json.dump(output, f, indent=2)
+        logger.info(f"✅ Output written to: {output_path.absolute()}")
+
+        # Also print to stdout (for Docker evaluators)
+        logger.info("📄 Output JSON (stdout):")
+        print(json.dumps(output, indent=2))
+
+        logger.info("=" * 70)
+        logger.info("✅ SCRAPER COMPLETED SUCCESSFULLY")
+        logger.info("=" * 70)
+        return 0
+
+    except Exception as e:
+        logger.error("=" * 70)
+        logger.error("❌ SCRAPER FAILED")
+        logger.error("=" * 70)
+        logger.error(f"Error type: {type(e).__name__}")
+        logger.error(f"Error message: {str(e)}")
+
+        import traceback
+
+        logger.debug(f"Traceback:\n{traceback.format_exc()}")
+
+        # Try to write error output (graceful degradation)
+        try:
+            error_output = {
+                "error": f"{type(e).__name__}: {str(e)}",
+                "search_metadata": {
+                    "origin": "LAX",
+                    "destination": "JFK",
+                    "date": "2025-12-15",
+                    "passengers": 1,
+                    "cabin_class": "economy",
+                },
+                "flights": [],
+                "total_results": 0,
+            }
+            output_path = Path("output.json")
+            with open(output_path, "w") as f:
+                json.dump(error_output, f, indent=2)
+            logger.info(f"📄 Error output written to: {output_path}")
+        except Exception as write_error:
+            logger.error(f"Failed to write error output: {write_error}")
+
+        return 1
+
+
+if __name__ == "__main__":
+    exit_code = main()
+    sys.exit(exit_code)

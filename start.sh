@@ -16,7 +16,7 @@ done
 
 # Stop and remove any existing farecraft containers to avoid port conflicts
 echo "🧹 Cleaning up old containers..."
-docker ps -a --filter "ancestor=farecraft:latest" --format "{{.ID}}" | xargs -r docker rm -f 2>/dev/null || true
+docker ps -a --filter "ancestor=prajwalsrinivas7/farecraft" --format "{{.ID}}" | xargs -r docker rm -f 2>/dev/null || true
 
 # Run the container with volume mount for persistent data
 # Volume mount maps: ./output (host) -> /app/output (container)
@@ -25,9 +25,9 @@ docker ps -a --filter "ancestor=farecraft:latest" --format "{{.ID}}" | xargs -r 
 if [ "$FULL_MODE" = true ]; then
     echo "🚀 Starting API server (full mode)..."
     echo "📡 API will be available at: http://localhost:8000"
-    docker run --rm -v ./output:/app/output -p 8000:8000 farecraft:latest python -m api.main
+    docker run --rm -v ./output:/app/output -p 8000:8000 prajwalsrinivas7/farecraft python -m api.main
 else
     echo "🚀 Starting scraper (contest mode)..."
     echo "📄 Results will be saved to: ./output/output.json"
-    docker run --rm -v ./output:/app/output farecraft:latest python scraper/scraper.py
+    docker run --rm -v ./output:/app/output prajwalsrinivas7/farecraft python scraper/scraper.py
 fi

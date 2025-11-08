@@ -5,7 +5,7 @@
 
 ## 🏆 Contest Submission
 
-**Docker Image:** [prajwalsrinivas7/farecraft:latest](https://hub.docker.com/repository/docker/prajwalsrinivas7/farecraft/general)
+**Docker Image:** https://hub.docker.com/r/prajwalsrinivas7/farecraft/tags
 
 ## Demo Videos
 
@@ -662,4 +662,5 @@ Built with ❤️ for the Web Scraping Contest - November 2025
 ## 📄 License
 
 This project is submitted for educational purposes as part of the Web Scraping Coding Contest.
+
 

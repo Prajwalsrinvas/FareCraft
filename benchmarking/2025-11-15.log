@@ -1,0 +1,1665 @@
+2025-11-15 03:45:52.965 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:45:52.966 | INFO     | 📅 Run started at: 2025-11-15T03:45:52.966048
+2025-11-15 03:45:52.966 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:45:52.966 | INFO     | ======================================================================
+2025-11-15 03:45:52.966 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:45:52.966 | INFO     | ======================================================================
+2025-11-15 03:45:52.966 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:45:52.967 | INFO     | 🆕 No cached cookies found, fetching fresh...
+2025-11-15 03:45:52.967 | INFO     | 🦊 START: Launching Camoufox to bypass Akamai Bot Manager...
+2025-11-15 03:45:55.808 | DEBUG    | 🌐 Loading aa.com booking search page...
+2025-11-15 03:45:57.732 | DEBUG    | ⏳ Waiting for Akamai sensor (polling every 500ms)...
+2025-11-15 03:45:57.735 | DEBUG    | ✓ Akamai sensor completed in 0.00s
+2025-11-15 03:46:04.722 | INFO     | ✅ Akamai cookies generated successfully in 11.75s
+2025-11-15 03:46:04.722 | DEBUG    |    Total cookies: 37
+2025-11-15 03:46:04.722 | DEBUG    |    _abck preview: FA475D54DB618066F5B600EB12D034F9~-1~YAAQfXEsMdRW1H...
+2025-11-15 03:46:04.722 | DEBUG    |    XSRF-TOKEN: Present
+2025-11-15 03:46:04.722 | DEBUG    | Using default 1-hour expiration: 1763181964 (will update from API response)
+2025-11-15 03:46:04.915 | DEBUG    | Saved cookies to cache with expiration: 1763181964
+2025-11-15 03:46:04.915 | INFO     | STEP 1 COMPLETE: Cookies ready in 11.95s
+2025-11-15 03:46:04.915 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:04.915 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:46:04.916 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:04.916 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:05.453 | WARNING  | ⚠️  Forbidden (403) - cookies likely invalid
+2025-11-15 03:46:05.453 | WARNING  | ⚠️  Forbidden (403) - cookies likely invalid
+2025-11-15 03:46:05.454 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.54s:
+2025-11-15 03:46:05.454 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.54s:
+2025-11-15 03:46:05.454 | ERROR    |    Exception type: InvalidCookiesException
+2025-11-15 03:46:05.454 | ERROR    |    Exception type: InvalidCookiesException
+2025-11-15 03:46:05.454 | ERROR    |    Exception message: Forbidden - bad cookies
+2025-11-15 03:46:05.454 | ERROR    |    Exception message: Forbidden - bad cookies
+2025-11-15 03:46:05.455 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 409, in fetch_flights
+    raise InvalidCookiesException("Forbidden - bad cookies")
+InvalidCookiesException: Forbidden - bad cookies
+
+2025-11-15 03:46:05.455 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 409, in fetch_flights
+    raise InvalidCookiesException("Forbidden - bad cookies")
+InvalidCookiesException: Forbidden - bad cookies
+
+2025-11-15 03:46:06.457 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:06.457 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:06.924 | WARNING  | ⚠️  Forbidden (403) - cookies likely invalid
+2025-11-15 03:46:06.924 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.47s:
+2025-11-15 03:46:06.924 | ERROR    |    Exception type: InvalidCookiesException
+2025-11-15 03:46:06.924 | ERROR    |    Exception message: Forbidden - bad cookies
+2025-11-15 03:46:06.924 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 409, in fetch_flights
+    raise InvalidCookiesException("Forbidden - bad cookies")
+InvalidCookiesException: Forbidden - bad cookies
+
+2025-11-15 03:46:06.950 | WARNING  | ⚠️  Forbidden (403) - cookies likely invalid
+2025-11-15 03:46:06.951 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.49s:
+2025-11-15 03:46:06.951 | ERROR    |    Exception type: InvalidCookiesException
+2025-11-15 03:46:06.951 | ERROR    |    Exception message: Forbidden - bad cookies
+2025-11-15 03:46:06.951 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 409, in fetch_flights
+    raise InvalidCookiesException("Forbidden - bad cookies")
+InvalidCookiesException: Forbidden - bad cookies
+
+2025-11-15 03:46:08.925 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:08.952 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:09.411 | WARNING  | ⚠️  Forbidden (403) - cookies likely invalid
+2025-11-15 03:46:09.411 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.49s:
+2025-11-15 03:46:09.411 | ERROR    |    Exception type: InvalidCookiesException
+2025-11-15 03:46:09.411 | ERROR    |    Exception message: Forbidden - bad cookies
+2025-11-15 03:46:09.412 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 409, in fetch_flights
+    raise InvalidCookiesException("Forbidden - bad cookies")
+InvalidCookiesException: Forbidden - bad cookies
+
+2025-11-15 03:46:09.413 | WARNING  | ⚠️  Forbidden (403) - cookies likely invalid
+2025-11-15 03:46:09.413 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.46s:
+2025-11-15 03:46:09.414 | ERROR    |    Exception type: InvalidCookiesException
+2025-11-15 03:46:09.414 | ERROR    |    Exception message: Forbidden - bad cookies
+2025-11-15 03:46:09.414 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 409, in fetch_flights
+    raise InvalidCookiesException("Forbidden - bad cookies")
+InvalidCookiesException: Forbidden - bad cookies
+
+2025-11-15 03:46:09.414 | WARNING  | ⚠️  Cookie attempt 1 failed: Forbidden - bad cookies
+2025-11-15 03:46:09.414 | INFO     |    Will retry with fresh cookies (2/3)...
+2025-11-15 03:46:09.414 | INFO     | STEP 1: Get Akamai cookies (attempt 2/3)
+2025-11-15 03:46:09.415 | WARNING  | 🔄 Previous attempt failed, generating fresh cookies...
+2025-11-15 03:46:09.415 | INFO     | 🦊 START: Launching Camoufox to bypass Akamai Bot Manager...
+2025-11-15 03:46:11.406 | DEBUG    | 🌐 Loading aa.com booking search page...
+2025-11-15 03:46:13.036 | DEBUG    | ⏳ Waiting for Akamai sensor (polling every 500ms)...
+2025-11-15 03:46:13.040 | DEBUG    | ✓ Akamai sensor completed in 0.00s
+2025-11-15 03:46:19.853 | INFO     | ✅ Akamai cookies generated successfully in 10.44s
+2025-11-15 03:46:19.853 | DEBUG    |    Total cookies: 39
+2025-11-15 03:46:19.854 | DEBUG    |    _abck preview: CE60AE2F17F27CEEA87D8ABAA5BDFCA3~-1~YAAQfXEsMUxX1H...
+2025-11-15 03:46:19.854 | DEBUG    |    XSRF-TOKEN: Present
+2025-11-15 03:46:19.854 | DEBUG    | Using default 1-hour expiration: 1763181979 (will update from API response)
+2025-11-15 03:46:20.025 | DEBUG    | Saved retry cookies to cache with expiration: 1763181979
+2025-11-15 03:46:20.025 | INFO     | STEP 1 COMPLETE: Cookies ready in 27.06s
+2025-11-15 03:46:20.025 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:20.025 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:46:20.026 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:20.026 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:22.331 | INFO     | ✅ Updated cookie expiration from API: 1763181981 (59m remaining)
+2025-11-15 03:46:22.331 | INFO     | ✅ SUCCESS: Award completed in 2.31s - 40 flights retrieved
+2025-11-15 03:46:24.129 | INFO     | ✅ Updated cookie expiration from API: 1763181983 (59m remaining)
+2025-11-15 03:46:24.129 | INFO     | ✅ SUCCESS: Revenue completed in 4.10s - 40 flights retrieved
+2025-11-15 03:46:24.132 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.11s
+2025-11-15 03:46:24.132 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:24.132 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:24.132 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:24.133 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:24.133 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:24.133 | INFO     | ======================================================================
+2025-11-15 03:46:24.133 | INFO     | ✅ SCRAPE COMPLETE in 31.17s! Found 19 flights
+2025-11-15 03:46:24.133 | INFO     | ======================================================================
+2025-11-15 03:46:24.134 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:24.134 | INFO     | ======================================================================
+2025-11-15 03:46:24.134 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:24.134 | INFO     | ======================================================================
+2025-11-15 03:46:25.534 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:25.534 | INFO     | 📅 Run started at: 2025-11-15T03:46:25.534971
+2025-11-15 03:46:25.535 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:25.535 | INFO     | ======================================================================
+2025-11-15 03:46:25.535 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:25.535 | INFO     | ======================================================================
+2025-11-15 03:46:25.535 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:25.536 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:25.536 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:25.536 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:25.536 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:46:25.536 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:25.537 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:27.975 | INFO     | ✅ Updated cookie expiration from API: 1763181987 (60m remaining)
+2025-11-15 03:46:27.976 | INFO     | ✅ SUCCESS: Award completed in 2.44s - 40 flights retrieved
+2025-11-15 03:46:28.810 | INFO     | ✅ Updated cookie expiration from API: 1763181988 (60m remaining)
+2025-11-15 03:46:28.811 | INFO     | ✅ SUCCESS: Revenue completed in 3.27s - 40 flights retrieved
+2025-11-15 03:46:28.812 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.28s
+2025-11-15 03:46:28.812 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:28.812 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:28.813 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:28.813 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:28.813 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:28.813 | INFO     | ======================================================================
+2025-11-15 03:46:28.813 | INFO     | ✅ SCRAPE COMPLETE in 3.28s! Found 19 flights
+2025-11-15 03:46:28.813 | INFO     | ======================================================================
+2025-11-15 03:46:28.818 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:28.819 | INFO     | ======================================================================
+2025-11-15 03:46:28.819 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:28.819 | INFO     | ======================================================================
+2025-11-15 03:46:30.176 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:30.176 | INFO     | 📅 Run started at: 2025-11-15T03:46:30.176377
+2025-11-15 03:46:30.176 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:30.176 | INFO     | ======================================================================
+2025-11-15 03:46:30.176 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:30.176 | INFO     | ======================================================================
+2025-11-15 03:46:30.176 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:30.177 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:30.177 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:30.177 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:30.177 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:46:30.178 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:30.178 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:32.173 | INFO     | ✅ Updated cookie expiration from API: 1763181991 (59m remaining)
+2025-11-15 03:46:32.173 | INFO     | ✅ SUCCESS: Award completed in 2.00s - 40 flights retrieved
+2025-11-15 03:46:33.693 | INFO     | ✅ Updated cookie expiration from API: 1763181993 (60m remaining)
+2025-11-15 03:46:33.693 | INFO     | ✅ SUCCESS: Revenue completed in 3.51s - 40 flights retrieved
+2025-11-15 03:46:33.694 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.52s
+2025-11-15 03:46:33.695 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:33.695 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:33.695 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:33.696 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:33.696 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:33.696 | INFO     | ======================================================================
+2025-11-15 03:46:33.696 | INFO     | ✅ SCRAPE COMPLETE in 3.52s! Found 19 flights
+2025-11-15 03:46:33.696 | INFO     | ======================================================================
+2025-11-15 03:46:33.701 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:33.702 | INFO     | ======================================================================
+2025-11-15 03:46:33.702 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:33.702 | INFO     | ======================================================================
+2025-11-15 03:46:35.109 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:35.109 | INFO     | 📅 Run started at: 2025-11-15T03:46:35.109876
+2025-11-15 03:46:35.110 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:35.110 | INFO     | ======================================================================
+2025-11-15 03:46:35.110 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:35.110 | INFO     | ======================================================================
+2025-11-15 03:46:35.110 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:35.110 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:35.111 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:35.111 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:35.111 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:46:35.111 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:35.112 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:38.654 | INFO     | ✅ Updated cookie expiration from API: 1763181996 (59m remaining)
+2025-11-15 03:46:38.655 | INFO     | ✅ SUCCESS: Award completed in 3.54s - 40 flights retrieved
+2025-11-15 03:46:38.668 | INFO     | ✅ Updated cookie expiration from API: 1763181998 (60m remaining)
+2025-11-15 03:46:38.669 | INFO     | ✅ SUCCESS: Revenue completed in 3.56s - 40 flights retrieved
+2025-11-15 03:46:38.670 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.56s
+2025-11-15 03:46:38.670 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:38.670 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:38.671 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:38.672 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:38.672 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:38.672 | INFO     | ======================================================================
+2025-11-15 03:46:38.672 | INFO     | ✅ SCRAPE COMPLETE in 3.56s! Found 19 flights
+2025-11-15 03:46:38.672 | INFO     | ======================================================================
+2025-11-15 03:46:38.681 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:38.681 | INFO     | ======================================================================
+2025-11-15 03:46:38.681 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:38.681 | INFO     | ======================================================================
+2025-11-15 03:46:40.063 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:40.063 | INFO     | 📅 Run started at: 2025-11-15T03:46:40.063689
+2025-11-15 03:46:40.063 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:40.063 | INFO     | ======================================================================
+2025-11-15 03:46:40.064 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:40.064 | INFO     | ======================================================================
+2025-11-15 03:46:40.064 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:40.064 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:40.064 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:40.064 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:40.065 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:46:40.065 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:40.066 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:43.220 | INFO     | ✅ Updated cookie expiration from API: 1763182001 (59m remaining)
+2025-11-15 03:46:43.221 | INFO     | ✅ SUCCESS: Award completed in 3.16s - 40 flights retrieved
+2025-11-15 03:46:43.944 | INFO     | ✅ Updated cookie expiration from API: 1763182002 (59m remaining)
+2025-11-15 03:46:43.944 | INFO     | ✅ SUCCESS: Revenue completed in 3.88s - 40 flights retrieved
+2025-11-15 03:46:43.946 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.88s
+2025-11-15 03:46:43.946 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:43.946 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:43.946 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:43.947 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:43.947 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:43.947 | INFO     | ======================================================================
+2025-11-15 03:46:43.947 | INFO     | ✅ SCRAPE COMPLETE in 3.88s! Found 19 flights
+2025-11-15 03:46:43.947 | INFO     | ======================================================================
+2025-11-15 03:46:43.952 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:43.952 | INFO     | ======================================================================
+2025-11-15 03:46:43.952 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:43.953 | INFO     | ======================================================================
+2025-11-15 03:46:45.285 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:45.285 | INFO     | 📅 Run started at: 2025-11-15T03:46:45.285791
+2025-11-15 03:46:45.285 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:45.286 | INFO     | ======================================================================
+2025-11-15 03:46:45.286 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:45.286 | INFO     | ======================================================================
+2025-11-15 03:46:45.286 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:45.286 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:45.287 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:45.287 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:45.287 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:46:45.287 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:45.288 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:47.547 | INFO     | ✅ Updated cookie expiration from API: 1763182006 (59m remaining)
+2025-11-15 03:46:47.547 | INFO     | ✅ SUCCESS: Award completed in 2.26s - 40 flights retrieved
+2025-11-15 03:46:48.818 | INFO     | ✅ Updated cookie expiration from API: 1763182008 (60m remaining)
+2025-11-15 03:46:48.818 | INFO     | ✅ SUCCESS: Revenue completed in 3.53s - 40 flights retrieved
+2025-11-15 03:46:48.819 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.53s
+2025-11-15 03:46:48.820 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:48.820 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:48.820 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:48.820 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:48.820 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:48.821 | INFO     | ======================================================================
+2025-11-15 03:46:48.821 | INFO     | ✅ SCRAPE COMPLETE in 3.53s! Found 19 flights
+2025-11-15 03:46:48.821 | INFO     | ======================================================================
+2025-11-15 03:46:48.827 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:48.827 | INFO     | ======================================================================
+2025-11-15 03:46:48.827 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:48.827 | INFO     | ======================================================================
+2025-11-15 03:46:50.108 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:50.109 | INFO     | 📅 Run started at: 2025-11-15T03:46:50.109203
+2025-11-15 03:46:50.109 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:50.109 | INFO     | ======================================================================
+2025-11-15 03:46:50.109 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:50.109 | INFO     | ======================================================================
+2025-11-15 03:46:50.109 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:50.110 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:50.110 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:50.110 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:50.110 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:46:50.111 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:50.111 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:52.154 | INFO     | ✅ Updated cookie expiration from API: 1763182011 (59m remaining)
+2025-11-15 03:46:52.154 | INFO     | ✅ SUCCESS: Award completed in 2.04s - 40 flights retrieved
+2025-11-15 03:46:53.577 | INFO     | ✅ Updated cookie expiration from API: 1763182012 (59m remaining)
+2025-11-15 03:46:53.577 | INFO     | ✅ SUCCESS: Revenue completed in 3.47s - 40 flights retrieved
+2025-11-15 03:46:53.580 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.47s
+2025-11-15 03:46:53.580 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:53.580 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:53.580 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:53.581 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:53.581 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:53.581 | INFO     | ======================================================================
+2025-11-15 03:46:53.581 | INFO     | ✅ SCRAPE COMPLETE in 3.47s! Found 19 flights
+2025-11-15 03:46:53.581 | INFO     | ======================================================================
+2025-11-15 03:46:53.586 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:53.587 | INFO     | ======================================================================
+2025-11-15 03:46:53.587 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:53.587 | INFO     | ======================================================================
+2025-11-15 03:46:54.896 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:54.897 | INFO     | 📅 Run started at: 2025-11-15T03:46:54.897140
+2025-11-15 03:46:54.897 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:54.897 | INFO     | ======================================================================
+2025-11-15 03:46:54.897 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:54.897 | INFO     | ======================================================================
+2025-11-15 03:46:54.897 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:54.898 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:54.898 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:54.898 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:54.898 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:46:54.898 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:54.899 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:46:56.945 | INFO     | ✅ Updated cookie expiration from API: 1763182016 (60m remaining)
+2025-11-15 03:46:56.945 | INFO     | ✅ SUCCESS: Award completed in 2.05s - 40 flights retrieved
+2025-11-15 03:46:58.082 | INFO     | ✅ Updated cookie expiration from API: 1763182017 (59m remaining)
+2025-11-15 03:46:58.082 | INFO     | ✅ SUCCESS: Revenue completed in 3.18s - 40 flights retrieved
+2025-11-15 03:46:58.084 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.19s
+2025-11-15 03:46:58.084 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:46:58.084 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:46:58.084 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:46:58.085 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:46:58.085 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:46:58.085 | INFO     | ======================================================================
+2025-11-15 03:46:58.085 | INFO     | ✅ SCRAPE COMPLETE in 3.19s! Found 19 flights
+2025-11-15 03:46:58.085 | INFO     | ======================================================================
+2025-11-15 03:46:58.091 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:46:58.091 | INFO     | ======================================================================
+2025-11-15 03:46:58.091 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:46:58.092 | INFO     | ======================================================================
+2025-11-15 03:46:59.405 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:46:59.406 | INFO     | 📅 Run started at: 2025-11-15T03:46:59.406199
+2025-11-15 03:46:59.406 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:46:59.406 | INFO     | ======================================================================
+2025-11-15 03:46:59.406 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:46:59.406 | INFO     | ======================================================================
+2025-11-15 03:46:59.406 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:46:59.407 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:46:59.407 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:46:59.407 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:46:59.407 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:46:59.408 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:46:59.408 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:01.532 | INFO     | ✅ Updated cookie expiration from API: 1763182020 (59m remaining)
+2025-11-15 03:47:01.532 | INFO     | ✅ SUCCESS: Award completed in 2.12s - 40 flights retrieved
+2025-11-15 03:47:02.741 | INFO     | ✅ Updated cookie expiration from API: 1763182021 (59m remaining)
+2025-11-15 03:47:02.741 | INFO     | ✅ SUCCESS: Revenue completed in 3.33s - 40 flights retrieved
+2025-11-15 03:47:02.742 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.34s
+2025-11-15 03:47:02.742 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:02.743 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:02.743 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:02.743 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:02.743 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:02.743 | INFO     | ======================================================================
+2025-11-15 03:47:02.743 | INFO     | ✅ SCRAPE COMPLETE in 3.34s! Found 19 flights
+2025-11-15 03:47:02.744 | INFO     | ======================================================================
+2025-11-15 03:47:02.749 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:02.749 | INFO     | ======================================================================
+2025-11-15 03:47:02.749 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:02.749 | INFO     | ======================================================================
+2025-11-15 03:47:04.084 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:04.084 | INFO     | 📅 Run started at: 2025-11-15T03:47:04.084550
+2025-11-15 03:47:04.084 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:04.084 | INFO     | ======================================================================
+2025-11-15 03:47:04.084 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:04.084 | INFO     | ======================================================================
+2025-11-15 03:47:04.085 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:04.085 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:04.085 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:04.085 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:04.085 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:47:04.086 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:04.086 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:04.237 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.15s:
+2025-11-15 03:47:04.237 | ERROR    |    Exception type: SSLError
+2025-11-15 03:47:04.237 | ERROR    |    Exception message: Failed to perform, curl: (35) TLS connect error: error:10000129:SSL routines:OPENSSL_internal:TLS13_DOWNGRADE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-15 03:47:04.248 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 640, in request
+    c.perform()
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/curl.py", line 365, in perform
+    self._check_error(ret, "perform")
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/curl.py", line 187, in _check_error
+    raise error
+curl_cffi.curl.CurlError: Failed to perform, curl: (35) TLS connect error: error:10000129:SSL routines:OPENSSL_internal:TLS13_DOWNGRADE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 396, in fetch_flights
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 664, in post
+    return self.request(method="POST", url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 647, in request
+    raise error(str(e), e.code, rsp) from e
+curl_cffi.requests.exceptions.SSLError: Failed to perform, curl: (35) TLS connect error: error:10000129:SSL routines:OPENSSL_internal:TLS13_DOWNGRADE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+
+2025-11-15 03:47:05.248 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:06.186 | INFO     | ✅ Updated cookie expiration from API: 1763182025 (59m remaining)
+2025-11-15 03:47:06.186 | INFO     | ✅ SUCCESS: Award completed in 2.10s - 40 flights retrieved
+2025-11-15 03:47:09.090 | INFO     | ✅ Updated cookie expiration from API: 1763182027 (59m remaining)
+2025-11-15 03:47:09.090 | INFO     | ✅ SUCCESS: Revenue completed in 3.84s - 40 flights retrieved
+2025-11-15 03:47:09.092 | INFO     | STEP 2 COMPLETE: Both API calls completed in 5.01s
+2025-11-15 03:47:09.093 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:09.093 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:09.093 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:09.094 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:09.094 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:09.094 | INFO     | ======================================================================
+2025-11-15 03:47:09.094 | INFO     | ✅ SCRAPE COMPLETE in 5.01s! Found 19 flights
+2025-11-15 03:47:09.094 | INFO     | ======================================================================
+2025-11-15 03:47:09.103 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:09.103 | INFO     | ======================================================================
+2025-11-15 03:47:09.103 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:09.103 | INFO     | ======================================================================
+2025-11-15 03:47:10.529 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:10.529 | INFO     | 📅 Run started at: 2025-11-15T03:47:10.529344
+2025-11-15 03:47:10.529 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:10.529 | INFO     | ======================================================================
+2025-11-15 03:47:10.529 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:10.529 | INFO     | ======================================================================
+2025-11-15 03:47:10.529 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:10.530 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:10.530 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:10.530 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:10.530 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:47:10.531 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:10.531 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:12.809 | INFO     | ✅ Updated cookie expiration from API: 1763182032 (60m remaining)
+2025-11-15 03:47:12.809 | INFO     | ✅ SUCCESS: Award completed in 2.28s - 40 flights retrieved
+2025-11-15 03:47:14.590 | INFO     | ✅ Updated cookie expiration from API: 1763182033 (59m remaining)
+2025-11-15 03:47:14.590 | INFO     | ✅ SUCCESS: Revenue completed in 4.06s - 40 flights retrieved
+2025-11-15 03:47:14.591 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.06s
+2025-11-15 03:47:14.592 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:14.592 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:14.592 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:14.592 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:14.593 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:14.593 | INFO     | ======================================================================
+2025-11-15 03:47:14.593 | INFO     | ✅ SCRAPE COMPLETE in 4.06s! Found 19 flights
+2025-11-15 03:47:14.593 | INFO     | ======================================================================
+2025-11-15 03:47:14.599 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:14.599 | INFO     | ======================================================================
+2025-11-15 03:47:14.599 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:14.599 | INFO     | ======================================================================
+2025-11-15 03:47:15.989 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:15.989 | INFO     | 📅 Run started at: 2025-11-15T03:47:15.989446
+2025-11-15 03:47:15.989 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:15.989 | INFO     | ======================================================================
+2025-11-15 03:47:15.989 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:15.989 | INFO     | ======================================================================
+2025-11-15 03:47:15.990 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:15.990 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:15.990 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:15.990 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:15.990 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:47:15.991 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:15.992 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:18.043 | INFO     | ✅ Updated cookie expiration from API: 1763182037 (59m remaining)
+2025-11-15 03:47:18.043 | INFO     | ✅ SUCCESS: Award completed in 2.05s - 40 flights retrieved
+2025-11-15 03:47:20.160 | INFO     | ✅ Updated cookie expiration from API: 1763182039 (59m remaining)
+2025-11-15 03:47:20.160 | INFO     | ✅ SUCCESS: Revenue completed in 4.17s - 40 flights retrieved
+2025-11-15 03:47:20.162 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.17s
+2025-11-15 03:47:20.162 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:20.162 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:20.162 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:20.163 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:20.163 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:20.163 | INFO     | ======================================================================
+2025-11-15 03:47:20.163 | INFO     | ✅ SCRAPE COMPLETE in 4.17s! Found 19 flights
+2025-11-15 03:47:20.163 | INFO     | ======================================================================
+2025-11-15 03:47:20.168 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:20.168 | INFO     | ======================================================================
+2025-11-15 03:47:20.168 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:20.168 | INFO     | ======================================================================
+2025-11-15 03:47:21.493 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:21.493 | INFO     | 📅 Run started at: 2025-11-15T03:47:21.493549
+2025-11-15 03:47:21.493 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:21.493 | INFO     | ======================================================================
+2025-11-15 03:47:21.493 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:21.494 | INFO     | ======================================================================
+2025-11-15 03:47:21.494 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:21.494 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:21.494 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:21.494 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:21.494 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:47:21.495 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:21.495 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:23.581 | INFO     | ✅ Updated cookie expiration from API: 1763182042 (59m remaining)
+2025-11-15 03:47:23.581 | INFO     | ✅ SUCCESS: Award completed in 2.09s - 40 flights retrieved
+2025-11-15 03:47:25.168 | INFO     | ✅ Updated cookie expiration from API: 1763182044 (59m remaining)
+2025-11-15 03:47:25.168 | INFO     | ✅ SUCCESS: Revenue completed in 3.67s - 40 flights retrieved
+2025-11-15 03:47:25.169 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.67s
+2025-11-15 03:47:25.169 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:25.170 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:25.170 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:25.170 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:25.170 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:25.171 | INFO     | ======================================================================
+2025-11-15 03:47:25.171 | INFO     | ✅ SCRAPE COMPLETE in 3.68s! Found 19 flights
+2025-11-15 03:47:25.171 | INFO     | ======================================================================
+2025-11-15 03:47:25.176 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:25.176 | INFO     | ======================================================================
+2025-11-15 03:47:25.177 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:25.177 | INFO     | ======================================================================
+2025-11-15 03:47:26.509 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:26.510 | INFO     | 📅 Run started at: 2025-11-15T03:47:26.510299
+2025-11-15 03:47:26.510 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:26.510 | INFO     | ======================================================================
+2025-11-15 03:47:26.510 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:26.510 | INFO     | ======================================================================
+2025-11-15 03:47:26.510 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:26.511 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:26.511 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:26.511 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:26.511 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:47:26.512 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:26.512 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:28.594 | INFO     | ✅ Updated cookie expiration from API: 1763182048 (60m remaining)
+2025-11-15 03:47:28.594 | INFO     | ✅ SUCCESS: Award completed in 2.08s - 40 flights retrieved
+2025-11-15 03:47:29.669 | INFO     | ✅ Updated cookie expiration from API: 1763182048 (59m remaining)
+2025-11-15 03:47:29.669 | INFO     | ✅ SUCCESS: Revenue completed in 3.16s - 40 flights retrieved
+2025-11-15 03:47:29.670 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.16s
+2025-11-15 03:47:29.670 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:29.671 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:29.671 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:29.671 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:29.671 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:29.671 | INFO     | ======================================================================
+2025-11-15 03:47:29.672 | INFO     | ✅ SCRAPE COMPLETE in 3.16s! Found 19 flights
+2025-11-15 03:47:29.672 | INFO     | ======================================================================
+2025-11-15 03:47:29.677 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:29.678 | INFO     | ======================================================================
+2025-11-15 03:47:29.678 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:29.678 | INFO     | ======================================================================
+2025-11-15 03:47:31.064 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:31.065 | INFO     | 📅 Run started at: 2025-11-15T03:47:31.065258
+2025-11-15 03:47:31.065 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:31.065 | INFO     | ======================================================================
+2025-11-15 03:47:31.065 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:31.065 | INFO     | ======================================================================
+2025-11-15 03:47:31.065 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:31.066 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:31.066 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:31.066 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:31.066 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:47:31.067 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:31.067 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:33.133 | INFO     | ✅ Updated cookie expiration from API: 1763182052 (59m remaining)
+2025-11-15 03:47:33.133 | INFO     | ✅ SUCCESS: Award completed in 2.07s - 40 flights retrieved
+2025-11-15 03:47:34.680 | INFO     | ✅ Updated cookie expiration from API: 1763182053 (59m remaining)
+2025-11-15 03:47:34.680 | INFO     | ✅ SUCCESS: Revenue completed in 3.61s - 40 flights retrieved
+2025-11-15 03:47:34.682 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.62s
+2025-11-15 03:47:34.682 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:34.682 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:34.682 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:34.683 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:34.683 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:34.683 | INFO     | ======================================================================
+2025-11-15 03:47:34.683 | INFO     | ✅ SCRAPE COMPLETE in 3.62s! Found 19 flights
+2025-11-15 03:47:34.683 | INFO     | ======================================================================
+2025-11-15 03:47:34.688 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:34.688 | INFO     | ======================================================================
+2025-11-15 03:47:34.688 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:34.688 | INFO     | ======================================================================
+2025-11-15 03:47:35.901 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:35.902 | INFO     | 📅 Run started at: 2025-11-15T03:47:35.902193
+2025-11-15 03:47:35.902 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:35.902 | INFO     | ======================================================================
+2025-11-15 03:47:35.902 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:35.902 | INFO     | ======================================================================
+2025-11-15 03:47:35.902 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:35.903 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:35.903 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:35.903 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:35.903 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:47:35.903 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:35.904 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:38.045 | INFO     | ✅ Updated cookie expiration from API: 1763182057 (59m remaining)
+2025-11-15 03:47:38.045 | INFO     | ✅ SUCCESS: Award completed in 2.14s - 40 flights retrieved
+2025-11-15 03:47:39.583 | INFO     | ✅ Updated cookie expiration from API: 1763182058 (59m remaining)
+2025-11-15 03:47:39.583 | INFO     | ✅ SUCCESS: Revenue completed in 3.68s - 40 flights retrieved
+2025-11-15 03:47:39.585 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.68s
+2025-11-15 03:47:39.586 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:39.586 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:39.586 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:39.586 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:39.586 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:39.586 | INFO     | ======================================================================
+2025-11-15 03:47:39.587 | INFO     | ✅ SCRAPE COMPLETE in 3.68s! Found 19 flights
+2025-11-15 03:47:39.587 | INFO     | ======================================================================
+2025-11-15 03:47:39.592 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:39.592 | INFO     | ======================================================================
+2025-11-15 03:47:39.592 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:39.592 | INFO     | ======================================================================
+2025-11-15 03:47:40.858 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:40.859 | INFO     | 📅 Run started at: 2025-11-15T03:47:40.859220
+2025-11-15 03:47:40.859 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:40.859 | INFO     | ======================================================================
+2025-11-15 03:47:40.859 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:40.859 | INFO     | ======================================================================
+2025-11-15 03:47:40.859 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:40.860 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:40.860 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:40.860 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:40.860 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:47:40.860 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:40.861 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:43.249 | INFO     | ✅ Updated cookie expiration from API: 1763182062 (59m remaining)
+2025-11-15 03:47:43.250 | INFO     | ✅ SUCCESS: Award completed in 2.39s - 40 flights retrieved
+2025-11-15 03:47:45.399 | INFO     | ✅ Updated cookie expiration from API: 1763182064 (59m remaining)
+2025-11-15 03:47:45.399 | INFO     | ✅ SUCCESS: Revenue completed in 4.54s - 40 flights retrieved
+2025-11-15 03:47:45.401 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.54s
+2025-11-15 03:47:45.401 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:45.401 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:45.401 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:45.402 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:45.402 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:45.402 | INFO     | ======================================================================
+2025-11-15 03:47:45.402 | INFO     | ✅ SCRAPE COMPLETE in 4.54s! Found 19 flights
+2025-11-15 03:47:45.402 | INFO     | ======================================================================
+2025-11-15 03:47:45.408 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:45.408 | INFO     | ======================================================================
+2025-11-15 03:47:45.409 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:45.409 | INFO     | ======================================================================
+2025-11-15 03:47:46.824 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:46.824 | INFO     | 📅 Run started at: 2025-11-15T03:47:46.824557
+2025-11-15 03:47:46.824 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:46.824 | INFO     | ======================================================================
+2025-11-15 03:47:46.824 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:46.825 | INFO     | ======================================================================
+2025-11-15 03:47:46.825 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:46.825 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:46.825 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:46.825 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:46.826 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:47:46.826 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:46.826 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:48.770 | INFO     | ✅ Updated cookie expiration from API: 1763182068 (60m remaining)
+2025-11-15 03:47:48.770 | INFO     | ✅ SUCCESS: Award completed in 1.94s - 40 flights retrieved
+2025-11-15 03:47:50.323 | INFO     | ✅ Updated cookie expiration from API: 1763182069 (59m remaining)
+2025-11-15 03:47:50.324 | INFO     | ✅ SUCCESS: Revenue completed in 3.50s - 40 flights retrieved
+2025-11-15 03:47:50.327 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.50s
+2025-11-15 03:47:50.327 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:50.327 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:50.328 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:50.329 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:50.329 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:50.329 | INFO     | ======================================================================
+2025-11-15 03:47:50.329 | INFO     | ✅ SCRAPE COMPLETE in 3.50s! Found 19 flights
+2025-11-15 03:47:50.329 | INFO     | ======================================================================
+2025-11-15 03:47:50.339 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:50.339 | INFO     | ======================================================================
+2025-11-15 03:47:50.339 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:50.340 | INFO     | ======================================================================
+2025-11-15 03:47:52.345 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:52.346 | INFO     | 📅 Run started at: 2025-11-15T03:47:52.346142
+2025-11-15 03:47:52.346 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:52.346 | INFO     | ======================================================================
+2025-11-15 03:47:52.346 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:52.346 | INFO     | ======================================================================
+2025-11-15 03:47:52.346 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:52.347 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:47:52.347 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:52.347 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:52.347 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:47:52.347 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:52.348 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:47:55.602 | INFO     | ✅ Updated cookie expiration from API: 1763182073 (59m remaining)
+2025-11-15 03:47:55.602 | INFO     | ✅ SUCCESS: Award completed in 3.25s - 40 flights retrieved
+2025-11-15 03:47:57.963 | INFO     | ✅ Updated cookie expiration from API: 1763182075 (59m remaining)
+2025-11-15 03:47:57.963 | INFO     | ✅ SUCCESS: Revenue completed in 5.61s - 40 flights retrieved
+2025-11-15 03:47:57.966 | INFO     | STEP 2 COMPLETE: Both API calls completed in 5.62s
+2025-11-15 03:47:57.966 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:47:57.966 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:47:57.966 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:47:57.967 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:47:57.968 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:47:57.968 | INFO     | ======================================================================
+2025-11-15 03:47:57.968 | INFO     | ✅ SCRAPE COMPLETE in 5.62s! Found 19 flights
+2025-11-15 03:47:57.968 | INFO     | ======================================================================
+2025-11-15 03:47:57.978 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:47:57.979 | INFO     | ======================================================================
+2025-11-15 03:47:57.979 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:47:57.979 | INFO     | ======================================================================
+2025-11-15 03:47:59.627 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:47:59.628 | INFO     | 📅 Run started at: 2025-11-15T03:47:59.628236
+2025-11-15 03:47:59.628 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:47:59.628 | INFO     | ======================================================================
+2025-11-15 03:47:59.628 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:47:59.628 | INFO     | ======================================================================
+2025-11-15 03:47:59.628 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:47:59.629 | INFO     | ✅ Using cached cookies (expires in 59.9m)
+2025-11-15 03:47:59.629 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:47:59.629 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:47:59.629 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:47:59.629 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:47:59.630 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:01.900 | INFO     | ✅ Updated cookie expiration from API: 1763182081 (60m remaining)
+2025-11-15 03:48:01.900 | INFO     | ✅ SUCCESS: Award completed in 2.27s - 40 flights retrieved
+2025-11-15 03:48:03.378 | INFO     | ✅ Updated cookie expiration from API: 1763182082 (59m remaining)
+2025-11-15 03:48:03.379 | INFO     | ✅ SUCCESS: Revenue completed in 3.75s - 40 flights retrieved
+2025-11-15 03:48:03.380 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.75s
+2025-11-15 03:48:03.380 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:03.381 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:03.381 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:03.381 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:03.381 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:03.381 | INFO     | ======================================================================
+2025-11-15 03:48:03.381 | INFO     | ✅ SCRAPE COMPLETE in 3.75s! Found 19 flights
+2025-11-15 03:48:03.381 | INFO     | ======================================================================
+2025-11-15 03:48:03.386 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:03.387 | INFO     | ======================================================================
+2025-11-15 03:48:03.387 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:03.387 | INFO     | ======================================================================
+2025-11-15 03:48:04.662 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:04.662 | INFO     | 📅 Run started at: 2025-11-15T03:48:04.662563
+2025-11-15 03:48:04.662 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:04.662 | INFO     | ======================================================================
+2025-11-15 03:48:04.662 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:04.663 | INFO     | ======================================================================
+2025-11-15 03:48:04.663 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:04.663 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:04.663 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:04.663 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:04.664 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:48:04.664 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:04.664 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:06.449 | INFO     | ✅ Updated cookie expiration from API: 1763182086 (60m remaining)
+2025-11-15 03:48:06.449 | INFO     | ✅ SUCCESS: Award completed in 1.78s - 40 flights retrieved
+2025-11-15 03:48:07.936 | INFO     | ✅ Updated cookie expiration from API: 1763182087 (60m remaining)
+2025-11-15 03:48:07.936 | INFO     | ✅ SUCCESS: Revenue completed in 3.27s - 40 flights retrieved
+2025-11-15 03:48:07.939 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.28s
+2025-11-15 03:48:07.939 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:07.939 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:07.940 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:07.941 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:07.941 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:07.941 | INFO     | ======================================================================
+2025-11-15 03:48:07.942 | INFO     | ✅ SCRAPE COMPLETE in 3.28s! Found 19 flights
+2025-11-15 03:48:07.942 | INFO     | ======================================================================
+2025-11-15 03:48:07.952 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:07.953 | INFO     | ======================================================================
+2025-11-15 03:48:07.953 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:07.954 | INFO     | ======================================================================
+2025-11-15 03:48:09.267 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:09.267 | INFO     | 📅 Run started at: 2025-11-15T03:48:09.267270
+2025-11-15 03:48:09.267 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:09.267 | INFO     | ======================================================================
+2025-11-15 03:48:09.267 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:09.267 | INFO     | ======================================================================
+2025-11-15 03:48:09.267 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:09.268 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:09.268 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:09.268 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:09.268 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:48:09.268 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:09.269 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:11.424 | INFO     | ✅ Updated cookie expiration from API: 1763182090 (59m remaining)
+2025-11-15 03:48:11.424 | INFO     | ✅ SUCCESS: Award completed in 2.16s - 40 flights retrieved
+2025-11-15 03:48:12.578 | INFO     | ✅ Updated cookie expiration from API: 1763182091 (59m remaining)
+2025-11-15 03:48:12.579 | INFO     | ✅ SUCCESS: Revenue completed in 3.31s - 40 flights retrieved
+2025-11-15 03:48:12.582 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.31s
+2025-11-15 03:48:12.582 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:12.583 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:12.583 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:12.585 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:12.585 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:12.586 | INFO     | ======================================================================
+2025-11-15 03:48:12.586 | INFO     | ✅ SCRAPE COMPLETE in 3.32s! Found 19 flights
+2025-11-15 03:48:12.587 | INFO     | ======================================================================
+2025-11-15 03:48:12.597 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:12.598 | INFO     | ======================================================================
+2025-11-15 03:48:12.598 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:12.598 | INFO     | ======================================================================
+2025-11-15 03:48:14.699 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:14.700 | INFO     | 📅 Run started at: 2025-11-15T03:48:14.700273
+2025-11-15 03:48:14.700 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:14.700 | INFO     | ======================================================================
+2025-11-15 03:48:14.700 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:14.700 | INFO     | ======================================================================
+2025-11-15 03:48:14.700 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:14.701 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:14.702 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:14.702 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:14.702 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:48:14.703 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:14.707 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:17.087 | INFO     | ✅ Updated cookie expiration from API: 1763182096 (59m remaining)
+2025-11-15 03:48:17.087 | INFO     | ✅ SUCCESS: Award completed in 2.38s - 40 flights retrieved
+2025-11-15 03:48:19.214 | INFO     | ✅ Updated cookie expiration from API: 1763182098 (59m remaining)
+2025-11-15 03:48:19.214 | INFO     | ✅ SUCCESS: Revenue completed in 4.51s - 40 flights retrieved
+2025-11-15 03:48:19.216 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.51s
+2025-11-15 03:48:19.216 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:19.216 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:19.216 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:19.217 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:19.217 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:19.217 | INFO     | ======================================================================
+2025-11-15 03:48:19.217 | INFO     | ✅ SCRAPE COMPLETE in 4.52s! Found 19 flights
+2025-11-15 03:48:19.217 | INFO     | ======================================================================
+2025-11-15 03:48:19.223 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:19.223 | INFO     | ======================================================================
+2025-11-15 03:48:19.223 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:19.224 | INFO     | ======================================================================
+2025-11-15 03:48:20.586 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:20.586 | INFO     | 📅 Run started at: 2025-11-15T03:48:20.586731
+2025-11-15 03:48:20.586 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:20.586 | INFO     | ======================================================================
+2025-11-15 03:48:20.587 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:20.587 | INFO     | ======================================================================
+2025-11-15 03:48:20.587 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:20.587 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:20.587 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:20.587 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:20.588 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:48:20.588 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:20.588 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:22.870 | INFO     | ✅ Updated cookie expiration from API: 1763182102 (60m remaining)
+2025-11-15 03:48:22.870 | INFO     | ✅ SUCCESS: Award completed in 2.28s - 40 flights retrieved
+2025-11-15 03:48:24.607 | INFO     | ✅ Updated cookie expiration from API: 1763182103 (59m remaining)
+2025-11-15 03:48:24.607 | INFO     | ✅ SUCCESS: Revenue completed in 4.02s - 40 flights retrieved
+2025-11-15 03:48:24.608 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.02s
+2025-11-15 03:48:24.609 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:24.609 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:24.609 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:24.609 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:24.609 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:24.609 | INFO     | ======================================================================
+2025-11-15 03:48:24.610 | INFO     | ✅ SCRAPE COMPLETE in 4.02s! Found 19 flights
+2025-11-15 03:48:24.610 | INFO     | ======================================================================
+2025-11-15 03:48:24.614 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:24.615 | INFO     | ======================================================================
+2025-11-15 03:48:24.615 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:24.615 | INFO     | ======================================================================
+2025-11-15 03:48:25.885 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:25.886 | INFO     | 📅 Run started at: 2025-11-15T03:48:25.886182
+2025-11-15 03:48:25.886 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:25.886 | INFO     | ======================================================================
+2025-11-15 03:48:25.886 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:25.886 | INFO     | ======================================================================
+2025-11-15 03:48:25.886 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:25.887 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:25.887 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:25.887 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:25.887 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:48:25.887 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:25.888 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:29.680 | INFO     | ✅ Updated cookie expiration from API: 1763182108 (59m remaining)
+2025-11-15 03:48:29.681 | INFO     | ✅ SUCCESS: Revenue completed in 3.79s - 40 flights retrieved
+2025-11-15 03:48:29.747 | INFO     | ✅ Updated cookie expiration from API: 1763182108 (59m remaining)
+2025-11-15 03:48:29.747 | INFO     | ✅ SUCCESS: Award completed in 3.86s - 40 flights retrieved
+2025-11-15 03:48:29.749 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.86s
+2025-11-15 03:48:29.749 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:29.749 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:29.749 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:29.750 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:29.750 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:29.750 | INFO     | ======================================================================
+2025-11-15 03:48:29.750 | INFO     | ✅ SCRAPE COMPLETE in 3.86s! Found 19 flights
+2025-11-15 03:48:29.750 | INFO     | ======================================================================
+2025-11-15 03:48:29.759 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:29.759 | INFO     | ======================================================================
+2025-11-15 03:48:29.759 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:29.759 | INFO     | ======================================================================
+2025-11-15 03:48:30.994 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:30.994 | INFO     | 📅 Run started at: 2025-11-15T03:48:30.994616
+2025-11-15 03:48:30.994 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:30.994 | INFO     | ======================================================================
+2025-11-15 03:48:30.994 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:30.995 | INFO     | ======================================================================
+2025-11-15 03:48:30.995 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:30.995 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:30.995 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:30.995 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:30.995 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:48:30.996 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:30.996 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:32.972 | INFO     | ✅ Updated cookie expiration from API: 1763182112 (60m remaining)
+2025-11-15 03:48:32.973 | INFO     | ✅ SUCCESS: Award completed in 1.98s - 40 flights retrieved
+2025-11-15 03:48:34.495 | INFO     | ✅ Updated cookie expiration from API: 1763182113 (59m remaining)
+2025-11-15 03:48:34.495 | INFO     | ✅ SUCCESS: Revenue completed in 3.50s - 40 flights retrieved
+2025-11-15 03:48:34.497 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.50s
+2025-11-15 03:48:34.497 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:34.497 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:34.497 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:34.498 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:34.498 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:34.498 | INFO     | ======================================================================
+2025-11-15 03:48:34.498 | INFO     | ✅ SCRAPE COMPLETE in 3.50s! Found 19 flights
+2025-11-15 03:48:34.498 | INFO     | ======================================================================
+2025-11-15 03:48:34.503 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:34.503 | INFO     | ======================================================================
+2025-11-15 03:48:34.503 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:34.503 | INFO     | ======================================================================
+2025-11-15 03:48:35.742 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:35.742 | INFO     | 📅 Run started at: 2025-11-15T03:48:35.742336
+2025-11-15 03:48:35.742 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:35.742 | INFO     | ======================================================================
+2025-11-15 03:48:35.742 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:35.742 | INFO     | ======================================================================
+2025-11-15 03:48:35.742 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:35.743 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:35.743 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:35.743 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:35.743 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:48:35.744 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:35.744 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:37.735 | INFO     | ✅ Updated cookie expiration from API: 1763182117 (60m remaining)
+2025-11-15 03:48:37.735 | INFO     | ✅ SUCCESS: Award completed in 1.99s - 40 flights retrieved
+2025-11-15 03:48:39.325 | INFO     | ✅ Updated cookie expiration from API: 1763182118 (59m remaining)
+2025-11-15 03:48:39.325 | INFO     | ✅ SUCCESS: Revenue completed in 3.58s - 40 flights retrieved
+2025-11-15 03:48:39.327 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.58s
+2025-11-15 03:48:39.327 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:39.327 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:39.327 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:39.327 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:39.328 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:39.328 | INFO     | ======================================================================
+2025-11-15 03:48:39.328 | INFO     | ✅ SCRAPE COMPLETE in 3.59s! Found 19 flights
+2025-11-15 03:48:39.328 | INFO     | ======================================================================
+2025-11-15 03:48:39.333 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:39.333 | INFO     | ======================================================================
+2025-11-15 03:48:39.333 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:39.333 | INFO     | ======================================================================
+2025-11-15 03:48:40.573 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:40.573 | INFO     | 📅 Run started at: 2025-11-15T03:48:40.573658
+2025-11-15 03:48:40.573 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:40.573 | INFO     | ======================================================================
+2025-11-15 03:48:40.574 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:40.574 | INFO     | ======================================================================
+2025-11-15 03:48:40.574 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:40.574 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:40.574 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:40.574 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:40.574 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:48:40.575 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:40.575 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:43.377 | INFO     | ✅ Updated cookie expiration from API: 1763182122 (59m remaining)
+2025-11-15 03:48:43.377 | INFO     | ✅ SUCCESS: Award completed in 2.80s - 40 flights retrieved
+2025-11-15 03:48:44.142 | INFO     | ✅ Updated cookie expiration from API: 1763182123 (59m remaining)
+2025-11-15 03:48:44.142 | INFO     | ✅ SUCCESS: Revenue completed in 3.57s - 40 flights retrieved
+2025-11-15 03:48:44.144 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.57s
+2025-11-15 03:48:44.144 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:44.144 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:44.144 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:44.145 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:44.145 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:44.145 | INFO     | ======================================================================
+2025-11-15 03:48:44.145 | INFO     | ✅ SCRAPE COMPLETE in 3.57s! Found 19 flights
+2025-11-15 03:48:44.145 | INFO     | ======================================================================
+2025-11-15 03:48:44.151 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:44.152 | INFO     | ======================================================================
+2025-11-15 03:48:44.152 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:44.152 | INFO     | ======================================================================
+2025-11-15 03:48:45.498 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:45.499 | INFO     | 📅 Run started at: 2025-11-15T03:48:45.499025
+2025-11-15 03:48:45.499 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:45.499 | INFO     | ======================================================================
+2025-11-15 03:48:45.499 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:45.499 | INFO     | ======================================================================
+2025-11-15 03:48:45.499 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:45.500 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:45.500 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:45.500 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:45.500 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:48:45.501 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:45.501 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:48.280 | INFO     | ✅ Updated cookie expiration from API: 1763182127 (59m remaining)
+2025-11-15 03:48:48.281 | INFO     | ✅ SUCCESS: Award completed in 2.78s - 40 flights retrieved
+2025-11-15 03:48:49.431 | INFO     | ✅ Updated cookie expiration from API: 1763182128 (59m remaining)
+2025-11-15 03:48:49.431 | INFO     | ✅ SUCCESS: Revenue completed in 3.93s - 40 flights retrieved
+2025-11-15 03:48:49.433 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.93s
+2025-11-15 03:48:49.433 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:49.433 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:49.434 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:49.434 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:49.434 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:49.435 | INFO     | ======================================================================
+2025-11-15 03:48:49.435 | INFO     | ✅ SCRAPE COMPLETE in 3.94s! Found 19 flights
+2025-11-15 03:48:49.435 | INFO     | ======================================================================
+2025-11-15 03:48:49.443 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:49.443 | INFO     | ======================================================================
+2025-11-15 03:48:49.443 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:49.443 | INFO     | ======================================================================
+2025-11-15 03:48:50.895 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:50.896 | INFO     | 📅 Run started at: 2025-11-15T03:48:50.896014
+2025-11-15 03:48:50.896 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:50.896 | INFO     | ======================================================================
+2025-11-15 03:48:50.896 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:50.896 | INFO     | ======================================================================
+2025-11-15 03:48:50.896 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:50.897 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:50.897 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:50.897 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:50.897 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:48:50.897 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:50.898 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:53.120 | INFO     | ✅ Updated cookie expiration from API: 1763182132 (59m remaining)
+2025-11-15 03:48:53.120 | INFO     | ✅ SUCCESS: Award completed in 2.22s - 40 flights retrieved
+2025-11-15 03:48:54.767 | INFO     | ✅ Updated cookie expiration from API: 1763182133 (59m remaining)
+2025-11-15 03:48:54.767 | INFO     | ✅ SUCCESS: Revenue completed in 3.87s - 40 flights retrieved
+2025-11-15 03:48:54.768 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.87s
+2025-11-15 03:48:54.769 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:54.769 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:54.769 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:54.769 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:54.769 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:54.770 | INFO     | ======================================================================
+2025-11-15 03:48:54.770 | INFO     | ✅ SCRAPE COMPLETE in 3.87s! Found 19 flights
+2025-11-15 03:48:54.770 | INFO     | ======================================================================
+2025-11-15 03:48:54.775 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:54.775 | INFO     | ======================================================================
+2025-11-15 03:48:54.775 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:54.775 | INFO     | ======================================================================
+2025-11-15 03:48:56.047 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:48:56.047 | INFO     | 📅 Run started at: 2025-11-15T03:48:56.047384
+2025-11-15 03:48:56.047 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:48:56.047 | INFO     | ======================================================================
+2025-11-15 03:48:56.047 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:48:56.047 | INFO     | ======================================================================
+2025-11-15 03:48:56.047 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:48:56.048 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:48:56.048 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:48:56.048 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:48:56.048 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:48:56.049 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:48:56.049 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:48:58.198 | INFO     | ✅ Updated cookie expiration from API: 1763182137 (59m remaining)
+2025-11-15 03:48:58.198 | INFO     | ✅ SUCCESS: Award completed in 2.15s - 40 flights retrieved
+2025-11-15 03:48:59.826 | INFO     | ✅ Updated cookie expiration from API: 1763182138 (59m remaining)
+2025-11-15 03:48:59.827 | INFO     | ✅ SUCCESS: Revenue completed in 3.78s - 40 flights retrieved
+2025-11-15 03:48:59.828 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.78s
+2025-11-15 03:48:59.829 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:48:59.829 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:48:59.829 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:48:59.829 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:48:59.829 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:48:59.829 | INFO     | ======================================================================
+2025-11-15 03:48:59.830 | INFO     | ✅ SCRAPE COMPLETE in 3.78s! Found 19 flights
+2025-11-15 03:48:59.830 | INFO     | ======================================================================
+2025-11-15 03:48:59.835 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:48:59.835 | INFO     | ======================================================================
+2025-11-15 03:48:59.835 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:48:59.835 | INFO     | ======================================================================
+2025-11-15 03:49:01.127 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:01.127 | INFO     | 📅 Run started at: 2025-11-15T03:49:01.127971
+2025-11-15 03:49:01.128 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:01.128 | INFO     | ======================================================================
+2025-11-15 03:49:01.128 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:01.128 | INFO     | ======================================================================
+2025-11-15 03:49:01.128 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:01.128 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:01.129 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:01.129 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:01.129 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:49:01.129 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:01.129 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:03.491 | INFO     | ✅ Updated cookie expiration from API: 1763182142 (59m remaining)
+2025-11-15 03:49:03.491 | INFO     | ✅ SUCCESS: Award completed in 2.36s - 40 flights retrieved
+2025-11-15 03:49:05.122 | INFO     | ✅ Updated cookie expiration from API: 1763182143 (59m remaining)
+2025-11-15 03:49:05.122 | INFO     | ✅ SUCCESS: Revenue completed in 3.99s - 40 flights retrieved
+2025-11-15 03:49:05.123 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.99s
+2025-11-15 03:49:05.124 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:05.124 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:05.124 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:05.124 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:05.125 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:05.125 | INFO     | ======================================================================
+2025-11-15 03:49:05.125 | INFO     | ✅ SCRAPE COMPLETE in 4.00s! Found 19 flights
+2025-11-15 03:49:05.125 | INFO     | ======================================================================
+2025-11-15 03:49:05.130 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:05.130 | INFO     | ======================================================================
+2025-11-15 03:49:05.130 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:05.130 | INFO     | ======================================================================
+2025-11-15 03:49:06.459 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:06.460 | INFO     | 📅 Run started at: 2025-11-15T03:49:06.460330
+2025-11-15 03:49:06.460 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:06.460 | INFO     | ======================================================================
+2025-11-15 03:49:06.460 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:06.460 | INFO     | ======================================================================
+2025-11-15 03:49:06.460 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:06.461 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:06.461 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:06.461 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:06.462 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:49:06.462 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:06.462 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:08.389 | INFO     | ✅ Updated cookie expiration from API: 1763182147 (59m remaining)
+2025-11-15 03:49:08.389 | INFO     | ✅ SUCCESS: Award completed in 1.93s - 40 flights retrieved
+2025-11-15 03:49:10.363 | INFO     | ✅ Updated cookie expiration from API: 1763182149 (59m remaining)
+2025-11-15 03:49:10.363 | INFO     | ✅ SUCCESS: Revenue completed in 3.90s - 40 flights retrieved
+2025-11-15 03:49:10.364 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.90s
+2025-11-15 03:49:10.365 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:10.365 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:10.365 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:10.365 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:10.365 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:10.365 | INFO     | ======================================================================
+2025-11-15 03:49:10.366 | INFO     | ✅ SCRAPE COMPLETE in 3.90s! Found 19 flights
+2025-11-15 03:49:10.366 | INFO     | ======================================================================
+2025-11-15 03:49:10.371 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:10.371 | INFO     | ======================================================================
+2025-11-15 03:49:10.371 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:10.371 | INFO     | ======================================================================
+2025-11-15 03:49:11.687 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:11.688 | INFO     | 📅 Run started at: 2025-11-15T03:49:11.688113
+2025-11-15 03:49:11.688 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:11.688 | INFO     | ======================================================================
+2025-11-15 03:49:11.688 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:11.688 | INFO     | ======================================================================
+2025-11-15 03:49:11.688 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:11.689 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:11.689 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:11.689 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:11.689 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:49:11.690 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:11.690 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:13.723 | INFO     | ✅ Updated cookie expiration from API: 1763182152 (59m remaining)
+2025-11-15 03:49:13.724 | INFO     | ✅ SUCCESS: Award completed in 2.03s - 40 flights retrieved
+2025-11-15 03:49:15.032 | INFO     | ✅ Updated cookie expiration from API: 1763182154 (59m remaining)
+2025-11-15 03:49:15.033 | INFO     | ✅ SUCCESS: Revenue completed in 3.34s - 40 flights retrieved
+2025-11-15 03:49:15.035 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.35s
+2025-11-15 03:49:15.035 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:15.035 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:15.035 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:15.036 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:15.037 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:15.037 | INFO     | ======================================================================
+2025-11-15 03:49:15.037 | INFO     | ✅ SCRAPE COMPLETE in 3.35s! Found 19 flights
+2025-11-15 03:49:15.037 | INFO     | ======================================================================
+2025-11-15 03:49:15.048 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:15.048 | INFO     | ======================================================================
+2025-11-15 03:49:15.048 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:15.048 | INFO     | ======================================================================
+2025-11-15 03:49:17.104 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:17.105 | INFO     | 📅 Run started at: 2025-11-15T03:49:17.105466
+2025-11-15 03:49:17.105 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:17.105 | INFO     | ======================================================================
+2025-11-15 03:49:17.106 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:17.106 | INFO     | ======================================================================
+2025-11-15 03:49:17.106 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:17.106 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:17.107 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:17.107 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:17.107 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:49:17.108 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:17.108 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:20.876 | INFO     | ✅ Updated cookie expiration from API: 1763182159 (59m remaining)
+2025-11-15 03:49:20.876 | INFO     | ✅ SUCCESS: Revenue completed in 3.77s - 40 flights retrieved
+2025-11-15 03:49:21.067 | INFO     | ✅ Updated cookie expiration from API: 1763182159 (59m remaining)
+2025-11-15 03:49:21.068 | INFO     | ✅ SUCCESS: Award completed in 3.96s - 40 flights retrieved
+2025-11-15 03:49:21.071 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.96s
+2025-11-15 03:49:21.071 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:21.071 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:21.071 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:21.072 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:21.072 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:21.072 | INFO     | ======================================================================
+2025-11-15 03:49:21.073 | INFO     | ✅ SCRAPE COMPLETE in 3.97s! Found 19 flights
+2025-11-15 03:49:21.073 | INFO     | ======================================================================
+2025-11-15 03:49:21.083 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:21.083 | INFO     | ======================================================================
+2025-11-15 03:49:21.083 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:21.083 | INFO     | ======================================================================
+2025-11-15 03:49:23.075 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:23.076 | INFO     | 📅 Run started at: 2025-11-15T03:49:23.076202
+2025-11-15 03:49:23.076 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:23.076 | INFO     | ======================================================================
+2025-11-15 03:49:23.076 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:23.077 | INFO     | ======================================================================
+2025-11-15 03:49:23.077 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:23.078 | INFO     | ✅ Using cached cookies (expires in 59.9m)
+2025-11-15 03:49:23.078 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:23.078 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:23.078 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:49:23.079 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:23.080 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:25.220 | INFO     | ✅ Updated cookie expiration from API: 1763182164 (59m remaining)
+2025-11-15 03:49:25.220 | INFO     | ✅ SUCCESS: Award completed in 2.14s - 40 flights retrieved
+2025-11-15 03:49:28.671 | INFO     | ✅ Updated cookie expiration from API: 1763182166 (59m remaining)
+2025-11-15 03:49:28.671 | INFO     | ✅ SUCCESS: Revenue completed in 5.59s - 40 flights retrieved
+2025-11-15 03:49:28.673 | INFO     | STEP 2 COMPLETE: Both API calls completed in 5.59s
+2025-11-15 03:49:28.673 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:28.673 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:28.673 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:28.674 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:28.674 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:28.674 | INFO     | ======================================================================
+2025-11-15 03:49:28.674 | INFO     | ✅ SCRAPE COMPLETE in 5.60s! Found 19 flights
+2025-11-15 03:49:28.674 | INFO     | ======================================================================
+2025-11-15 03:49:28.680 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:28.680 | INFO     | ======================================================================
+2025-11-15 03:49:28.680 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:28.680 | INFO     | ======================================================================
+2025-11-15 03:49:30.255 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:30.255 | INFO     | 📅 Run started at: 2025-11-15T03:49:30.255828
+2025-11-15 03:49:30.256 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:30.256 | INFO     | ======================================================================
+2025-11-15 03:49:30.256 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:30.256 | INFO     | ======================================================================
+2025-11-15 03:49:30.256 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:30.257 | INFO     | ✅ Using cached cookies (expires in 59.9m)
+2025-11-15 03:49:30.257 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:30.258 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:30.258 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:49:30.258 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:30.259 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:30.314 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.05s:
+2025-11-15 03:49:30.315 | ERROR    |    Exception type: SSLError
+2025-11-15 03:49:30.315 | ERROR    |    Exception message: Failed to perform, curl: (35) TLS connect error: error:10000410:SSL routines:OPENSSL_internal:SSLV3_ALERT_HANDSHAKE_FAILURE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-15 03:49:30.317 | ERROR    | ❌ EXCEPTION in fetch_flights after 0.06s:
+2025-11-15 03:49:30.319 | ERROR    |    Exception type: SSLError
+2025-11-15 03:49:30.319 | ERROR    |    Exception message: Failed to perform, curl: (35) TLS connect error: error:10000410:SSL routines:OPENSSL_internal:SSLV3_ALERT_HANDSHAKE_FAILURE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-15 03:49:30.321 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 640, in request
+    c.perform()
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/curl.py", line 365, in perform
+    self._check_error(ret, "perform")
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/curl.py", line 187, in _check_error
+    raise error
+curl_cffi.curl.CurlError: Failed to perform, curl: (35) TLS connect error: error:10000410:SSL routines:OPENSSL_internal:SSLV3_ALERT_HANDSHAKE_FAILURE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 396, in fetch_flights
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 664, in post
+    return self.request(method="POST", url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 647, in request
+    raise error(str(e), e.code, rsp) from e
+curl_cffi.requests.exceptions.SSLError: Failed to perform, curl: (35) TLS connect error: error:10000410:SSL routines:OPENSSL_internal:SSLV3_ALERT_HANDSHAKE_FAILURE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+
+2025-11-15 03:49:30.322 | DEBUG    |    Traceback: Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 640, in request
+    c.perform()
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/curl.py", line 365, in perform
+    self._check_error(ret, "perform")
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/curl.py", line 187, in _check_error
+    raise error
+curl_cffi.curl.CurlError: Failed to perform, curl: (35) TLS connect error: error:10000410:SSL routines:OPENSSL_internal:SSLV3_ALERT_HANDSHAKE_FAILURE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/scraper/scraper.py", line 396, in fetch_flights
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 664, in post
+    return self.request(method="POST", url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/curl_cffi/requests/session.py", line 647, in request
+    raise error(str(e), e.code, rsp) from e
+curl_cffi.requests.exceptions.SSLError: Failed to perform, curl: (35) TLS connect error: error:10000410:SSL routines:OPENSSL_internal:SSLV3_ALERT_HANDSHAKE_FAILURE. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+
+2025-11-15 03:49:31.323 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:31.324 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:33.435 | INFO     | ✅ Updated cookie expiration from API: 1763182172 (59m remaining)
+2025-11-15 03:49:33.435 | INFO     | ✅ SUCCESS: Award completed in 2.11s - 40 flights retrieved
+2025-11-15 03:49:35.407 | INFO     | ✅ Updated cookie expiration from API: 1763182173 (59m remaining)
+2025-11-15 03:49:35.407 | INFO     | ✅ SUCCESS: Revenue completed in 4.08s - 40 flights retrieved
+2025-11-15 03:49:35.410 | INFO     | STEP 2 COMPLETE: Both API calls completed in 5.15s
+2025-11-15 03:49:35.410 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:35.410 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:35.410 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:35.411 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:35.411 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:35.411 | INFO     | ======================================================================
+2025-11-15 03:49:35.411 | INFO     | ✅ SCRAPE COMPLETE in 5.15s! Found 19 flights
+2025-11-15 03:49:35.411 | INFO     | ======================================================================
+2025-11-15 03:49:35.416 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:35.416 | INFO     | ======================================================================
+2025-11-15 03:49:35.416 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:35.417 | INFO     | ======================================================================
+2025-11-15 03:49:36.938 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:36.938 | INFO     | 📅 Run started at: 2025-11-15T03:49:36.938751
+2025-11-15 03:49:36.939 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:36.939 | INFO     | ======================================================================
+2025-11-15 03:49:36.939 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:36.939 | INFO     | ======================================================================
+2025-11-15 03:49:36.939 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:36.940 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:36.940 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:36.940 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:36.940 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:49:36.941 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:36.941 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:38.827 | INFO     | ✅ Updated cookie expiration from API: 1763182178 (60m remaining)
+2025-11-15 03:49:38.828 | INFO     | ✅ SUCCESS: Award completed in 1.89s - 40 flights retrieved
+2025-11-15 03:49:40.413 | INFO     | ✅ Updated cookie expiration from API: 1763182179 (59m remaining)
+2025-11-15 03:49:40.413 | INFO     | ✅ SUCCESS: Revenue completed in 3.47s - 40 flights retrieved
+2025-11-15 03:49:40.416 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.48s
+2025-11-15 03:49:40.416 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:40.416 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:40.416 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:40.416 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:40.417 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:40.417 | INFO     | ======================================================================
+2025-11-15 03:49:40.417 | INFO     | ✅ SCRAPE COMPLETE in 3.48s! Found 19 flights
+2025-11-15 03:49:40.417 | INFO     | ======================================================================
+2025-11-15 03:49:40.422 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:40.422 | INFO     | ======================================================================
+2025-11-15 03:49:40.422 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:40.422 | INFO     | ======================================================================
+2025-11-15 03:49:41.753 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:41.754 | INFO     | 📅 Run started at: 2025-11-15T03:49:41.754129
+2025-11-15 03:49:41.754 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:41.754 | INFO     | ======================================================================
+2025-11-15 03:49:41.754 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:41.754 | INFO     | ======================================================================
+2025-11-15 03:49:41.754 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:41.755 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:41.755 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:41.755 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:41.755 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:49:41.756 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:41.756 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:43.618 | INFO     | ✅ Updated cookie expiration from API: 1763182182 (59m remaining)
+2025-11-15 03:49:43.618 | INFO     | ✅ SUCCESS: Award completed in 1.86s - 40 flights retrieved
+2025-11-15 03:49:45.474 | INFO     | ✅ Updated cookie expiration from API: 1763182184 (59m remaining)
+2025-11-15 03:49:45.474 | INFO     | ✅ SUCCESS: Revenue completed in 3.72s - 40 flights retrieved
+2025-11-15 03:49:45.477 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.72s
+2025-11-15 03:49:45.477 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:45.477 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:45.477 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:45.478 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:45.478 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:45.478 | INFO     | ======================================================================
+2025-11-15 03:49:45.478 | INFO     | ✅ SCRAPE COMPLETE in 3.72s! Found 19 flights
+2025-11-15 03:49:45.478 | INFO     | ======================================================================
+2025-11-15 03:49:45.484 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:45.484 | INFO     | ======================================================================
+2025-11-15 03:49:45.485 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:45.485 | INFO     | ======================================================================
+2025-11-15 03:49:46.805 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:46.805 | INFO     | 📅 Run started at: 2025-11-15T03:49:46.805796
+2025-11-15 03:49:46.805 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:46.806 | INFO     | ======================================================================
+2025-11-15 03:49:46.806 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:46.806 | INFO     | ======================================================================
+2025-11-15 03:49:46.806 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:46.806 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:46.806 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:46.806 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:46.807 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:49:46.807 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:46.807 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:48.995 | INFO     | ✅ Updated cookie expiration from API: 1763182188 (60m remaining)
+2025-11-15 03:49:48.995 | INFO     | ✅ SUCCESS: Award completed in 2.19s - 40 flights retrieved
+2025-11-15 03:49:50.346 | INFO     | ✅ Updated cookie expiration from API: 1763182189 (59m remaining)
+2025-11-15 03:49:50.346 | INFO     | ✅ SUCCESS: Revenue completed in 3.54s - 40 flights retrieved
+2025-11-15 03:49:50.348 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.54s
+2025-11-15 03:49:50.348 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:50.348 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:50.349 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:50.349 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:50.349 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:50.349 | INFO     | ======================================================================
+2025-11-15 03:49:50.349 | INFO     | ✅ SCRAPE COMPLETE in 3.54s! Found 19 flights
+2025-11-15 03:49:50.349 | INFO     | ======================================================================
+2025-11-15 03:49:50.354 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:50.354 | INFO     | ======================================================================
+2025-11-15 03:49:50.354 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:50.354 | INFO     | ======================================================================
+2025-11-15 03:49:51.636 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:51.637 | INFO     | 📅 Run started at: 2025-11-15T03:49:51.637415
+2025-11-15 03:49:51.637 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:51.637 | INFO     | ======================================================================
+2025-11-15 03:49:51.637 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:51.637 | INFO     | ======================================================================
+2025-11-15 03:49:51.638 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:51.638 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:51.638 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:51.638 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:51.638 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:49:51.639 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:51.639 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:53.788 | INFO     | ✅ Updated cookie expiration from API: 1763182192 (59m remaining)
+2025-11-15 03:49:53.788 | INFO     | ✅ SUCCESS: Award completed in 2.15s - 40 flights retrieved
+2025-11-15 03:49:56.122 | INFO     | ✅ Updated cookie expiration from API: 1763182195 (59m remaining)
+2025-11-15 03:49:56.122 | INFO     | ✅ SUCCESS: Revenue completed in 4.48s - 40 flights retrieved
+2025-11-15 03:49:56.125 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.49s
+2025-11-15 03:49:56.125 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:49:56.125 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:49:56.125 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:49:56.126 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:49:56.126 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:49:56.126 | INFO     | ======================================================================
+2025-11-15 03:49:56.126 | INFO     | ✅ SCRAPE COMPLETE in 4.49s! Found 19 flights
+2025-11-15 03:49:56.126 | INFO     | ======================================================================
+2025-11-15 03:49:56.132 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:49:56.132 | INFO     | ======================================================================
+2025-11-15 03:49:56.133 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:49:56.133 | INFO     | ======================================================================
+2025-11-15 03:49:57.720 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:49:57.720 | INFO     | 📅 Run started at: 2025-11-15T03:49:57.720911
+2025-11-15 03:49:57.721 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:49:57.721 | INFO     | ======================================================================
+2025-11-15 03:49:57.721 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:49:57.721 | INFO     | ======================================================================
+2025-11-15 03:49:57.721 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:49:57.722 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:49:57.722 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:49:57.722 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:49:57.722 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:49:57.722 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:49:57.723 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:49:59.604 | INFO     | ✅ Updated cookie expiration from API: 1763182198 (59m remaining)
+2025-11-15 03:49:59.605 | INFO     | ✅ SUCCESS: Award completed in 1.88s - 40 flights retrieved
+2025-11-15 03:50:03.299 | INFO     | ✅ Updated cookie expiration from API: 1763182200 (59m remaining)
+2025-11-15 03:50:03.299 | INFO     | ✅ SUCCESS: Revenue completed in 5.57s - 40 flights retrieved
+2025-11-15 03:50:03.301 | INFO     | STEP 2 COMPLETE: Both API calls completed in 5.58s
+2025-11-15 03:50:03.301 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:03.301 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:03.301 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:03.302 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:03.302 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:03.302 | INFO     | ======================================================================
+2025-11-15 03:50:03.303 | INFO     | ✅ SCRAPE COMPLETE in 5.58s! Found 19 flights
+2025-11-15 03:50:03.303 | INFO     | ======================================================================
+2025-11-15 03:50:03.311 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:03.312 | INFO     | ======================================================================
+2025-11-15 03:50:03.312 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:03.312 | INFO     | ======================================================================
+2025-11-15 03:50:04.711 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:04.712 | INFO     | 📅 Run started at: 2025-11-15T03:50:04.712029
+2025-11-15 03:50:04.712 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:04.712 | INFO     | ======================================================================
+2025-11-15 03:50:04.712 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:04.712 | INFO     | ======================================================================
+2025-11-15 03:50:04.712 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:04.713 | INFO     | ✅ Using cached cookies (expires in 59.9m)
+2025-11-15 03:50:04.713 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:04.713 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:04.713 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:50:04.713 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:04.714 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:06.693 | INFO     | ✅ Updated cookie expiration from API: 1763182206 (60m remaining)
+2025-11-15 03:50:06.693 | INFO     | ✅ SUCCESS: Award completed in 1.98s - 40 flights retrieved
+2025-11-15 03:50:07.980 | INFO     | ✅ Updated cookie expiration from API: 1763182207 (60m remaining)
+2025-11-15 03:50:07.980 | INFO     | ✅ SUCCESS: Revenue completed in 3.27s - 40 flights retrieved
+2025-11-15 03:50:07.982 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.27s
+2025-11-15 03:50:07.982 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:07.982 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:07.982 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:07.983 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:07.983 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:07.983 | INFO     | ======================================================================
+2025-11-15 03:50:07.983 | INFO     | ✅ SCRAPE COMPLETE in 3.27s! Found 19 flights
+2025-11-15 03:50:07.983 | INFO     | ======================================================================
+2025-11-15 03:50:07.988 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:07.988 | INFO     | ======================================================================
+2025-11-15 03:50:07.989 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:07.989 | INFO     | ======================================================================
+2025-11-15 03:50:09.253 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:09.253 | INFO     | 📅 Run started at: 2025-11-15T03:50:09.253835
+2025-11-15 03:50:09.254 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:09.254 | INFO     | ======================================================================
+2025-11-15 03:50:09.254 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:09.254 | INFO     | ======================================================================
+2025-11-15 03:50:09.254 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:09.254 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:50:09.255 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:09.255 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:09.255 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:50:09.255 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:09.256 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:11.388 | INFO     | ✅ Updated cookie expiration from API: 1763182210 (59m remaining)
+2025-11-15 03:50:11.388 | INFO     | ✅ SUCCESS: Award completed in 2.13s - 40 flights retrieved
+2025-11-15 03:50:13.474 | INFO     | ✅ Updated cookie expiration from API: 1763182211 (59m remaining)
+2025-11-15 03:50:13.474 | INFO     | ✅ SUCCESS: Revenue completed in 4.22s - 40 flights retrieved
+2025-11-15 03:50:13.476 | INFO     | STEP 2 COMPLETE: Both API calls completed in 4.22s
+2025-11-15 03:50:13.476 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:13.477 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:13.477 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:13.477 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:13.477 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:13.477 | INFO     | ======================================================================
+2025-11-15 03:50:13.478 | INFO     | ✅ SCRAPE COMPLETE in 4.22s! Found 19 flights
+2025-11-15 03:50:13.478 | INFO     | ======================================================================
+2025-11-15 03:50:13.483 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:13.483 | INFO     | ======================================================================
+2025-11-15 03:50:13.484 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:13.484 | INFO     | ======================================================================
+2025-11-15 03:50:14.835 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:14.835 | INFO     | 📅 Run started at: 2025-11-15T03:50:14.835259
+2025-11-15 03:50:14.835 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:14.835 | INFO     | ======================================================================
+2025-11-15 03:50:14.835 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:14.835 | INFO     | ======================================================================
+2025-11-15 03:50:14.835 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:14.836 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:50:14.836 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:14.836 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:14.836 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:50:14.837 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:14.837 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:17.060 | INFO     | ✅ Updated cookie expiration from API: 1763182216 (59m remaining)
+2025-11-15 03:50:17.060 | INFO     | ✅ SUCCESS: Award completed in 2.22s - 40 flights retrieved
+2025-11-15 03:50:18.531 | INFO     | ✅ Updated cookie expiration from API: 1763182217 (59m remaining)
+2025-11-15 03:50:18.531 | INFO     | ✅ SUCCESS: Revenue completed in 3.69s - 40 flights retrieved
+2025-11-15 03:50:18.533 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.70s
+2025-11-15 03:50:18.533 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:18.533 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:18.533 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:18.534 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:18.534 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:18.534 | INFO     | ======================================================================
+2025-11-15 03:50:18.534 | INFO     | ✅ SCRAPE COMPLETE in 3.70s! Found 19 flights
+2025-11-15 03:50:18.534 | INFO     | ======================================================================
+2025-11-15 03:50:18.540 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:18.540 | INFO     | ======================================================================
+2025-11-15 03:50:18.540 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:18.540 | INFO     | ======================================================================
+2025-11-15 03:50:19.884 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:19.885 | INFO     | 📅 Run started at: 2025-11-15T03:50:19.885195
+2025-11-15 03:50:19.885 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:19.885 | INFO     | ======================================================================
+2025-11-15 03:50:19.885 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:19.885 | INFO     | ======================================================================
+2025-11-15 03:50:19.885 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:19.886 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:50:19.886 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:19.886 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:19.886 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:50:19.887 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:19.887 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:21.872 | INFO     | ✅ Updated cookie expiration from API: 1763182221 (60m remaining)
+2025-11-15 03:50:21.872 | INFO     | ✅ SUCCESS: Award completed in 1.99s - 40 flights retrieved
+2025-11-15 03:50:23.321 | INFO     | ✅ Updated cookie expiration from API: 1763182222 (59m remaining)
+2025-11-15 03:50:23.321 | INFO     | ✅ SUCCESS: Revenue completed in 3.43s - 40 flights retrieved
+2025-11-15 03:50:23.323 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.44s
+2025-11-15 03:50:23.323 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:23.323 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:23.323 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:23.324 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:23.324 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:23.325 | INFO     | ======================================================================
+2025-11-15 03:50:23.325 | INFO     | ✅ SCRAPE COMPLETE in 3.44s! Found 19 flights
+2025-11-15 03:50:23.325 | INFO     | ======================================================================
+2025-11-15 03:50:23.332 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:23.332 | INFO     | ======================================================================
+2025-11-15 03:50:23.333 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:23.333 | INFO     | ======================================================================
+2025-11-15 03:50:24.628 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:24.628 | INFO     | 📅 Run started at: 2025-11-15T03:50:24.628549
+2025-11-15 03:50:24.628 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:24.628 | INFO     | ======================================================================
+2025-11-15 03:50:24.628 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:24.628 | INFO     | ======================================================================
+2025-11-15 03:50:24.629 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:24.629 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:50:24.629 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:24.629 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:24.629 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:50:24.630 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:24.630 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:26.588 | INFO     | ✅ Updated cookie expiration from API: 1763182225 (59m remaining)
+2025-11-15 03:50:26.588 | INFO     | ✅ SUCCESS: Award completed in 1.96s - 40 flights retrieved
+2025-11-15 03:50:27.741 | INFO     | ✅ Updated cookie expiration from API: 1763182226 (59m remaining)
+2025-11-15 03:50:27.741 | INFO     | ✅ SUCCESS: Revenue completed in 3.11s - 40 flights retrieved
+2025-11-15 03:50:27.743 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.11s
+2025-11-15 03:50:27.743 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:27.743 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:27.743 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:27.744 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:27.744 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:27.744 | INFO     | ======================================================================
+2025-11-15 03:50:27.744 | INFO     | ✅ SCRAPE COMPLETE in 3.12s! Found 19 flights
+2025-11-15 03:50:27.744 | INFO     | ======================================================================
+2025-11-15 03:50:27.749 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:27.750 | INFO     | ======================================================================
+2025-11-15 03:50:27.750 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:27.750 | INFO     | ======================================================================
+2025-11-15 03:50:29.102 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:29.102 | INFO     | 📅 Run started at: 2025-11-15T03:50:29.102544
+2025-11-15 03:50:29.102 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:29.102 | INFO     | ======================================================================
+2025-11-15 03:50:29.102 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:29.103 | INFO     | ======================================================================
+2025-11-15 03:50:29.103 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:29.103 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:50:29.103 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:29.103 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:29.104 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:50:29.104 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:29.104 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:31.371 | INFO     | ✅ Updated cookie expiration from API: 1763182230 (59m remaining)
+2025-11-15 03:50:31.371 | INFO     | ✅ SUCCESS: Award completed in 2.27s - 40 flights retrieved
+2025-11-15 03:50:32.406 | INFO     | ✅ Updated cookie expiration from API: 1763182231 (59m remaining)
+2025-11-15 03:50:32.406 | INFO     | ✅ SUCCESS: Revenue completed in 3.30s - 40 flights retrieved
+2025-11-15 03:50:32.407 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.30s
+2025-11-15 03:50:32.408 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:32.408 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:32.408 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:32.408 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:32.408 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:32.409 | INFO     | ======================================================================
+2025-11-15 03:50:32.409 | INFO     | ✅ SCRAPE COMPLETE in 3.31s! Found 19 flights
+2025-11-15 03:50:32.409 | INFO     | ======================================================================
+2025-11-15 03:50:32.414 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:32.414 | INFO     | ======================================================================
+2025-11-15 03:50:32.414 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:32.414 | INFO     | ======================================================================
+2025-11-15 03:50:33.741 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:33.742 | INFO     | 📅 Run started at: 2025-11-15T03:50:33.742132
+2025-11-15 03:50:33.742 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:33.742 | INFO     | ======================================================================
+2025-11-15 03:50:33.742 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:33.742 | INFO     | ======================================================================
+2025-11-15 03:50:33.742 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:33.743 | INFO     | ✅ Using cached cookies (expires in 60.0m)
+2025-11-15 03:50:33.743 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:33.743 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:33.743 | DEBUG    |    Request order: Award then Revenue
+2025-11-15 03:50:33.743 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:33.744 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:35.977 | INFO     | ✅ Updated cookie expiration from API: 1763182235 (60m remaining)
+2025-11-15 03:50:35.977 | INFO     | ✅ SUCCESS: Award completed in 2.23s - 40 flights retrieved
+2025-11-15 03:50:39.054 | INFO     | ✅ Updated cookie expiration from API: 1763182236 (59m remaining)
+2025-11-15 03:50:39.054 | INFO     | ✅ SUCCESS: Revenue completed in 5.31s - 40 flights retrieved
+2025-11-15 03:50:39.056 | INFO     | STEP 2 COMPLETE: Both API calls completed in 5.31s
+2025-11-15 03:50:39.056 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:39.056 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:39.056 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:39.057 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:39.057 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:39.057 | INFO     | ======================================================================
+2025-11-15 03:50:39.057 | INFO     | ✅ SCRAPE COMPLETE in 5.31s! Found 19 flights
+2025-11-15 03:50:39.057 | INFO     | ======================================================================
+2025-11-15 03:50:39.063 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:39.063 | INFO     | ======================================================================
+2025-11-15 03:50:39.063 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:39.063 | INFO     | ======================================================================
+2025-11-15 03:50:40.461 | INFO     | 🚀 American Airlines Scraper - Contest Mode
+2025-11-15 03:50:40.461 | INFO     | 📅 Run started at: 2025-11-15T03:50:40.461758
+2025-11-15 03:50:40.461 | INFO     | 🎯 Scraping: LAX → JFK on 2025-12-15
+2025-11-15 03:50:40.462 | INFO     | ======================================================================
+2025-11-15 03:50:40.462 | INFO     | SCRAPE START: LAX → JFK on 2025-12-15
+2025-11-15 03:50:40.462 | INFO     | ======================================================================
+2025-11-15 03:50:40.462 | INFO     | STEP 1: Get Akamai cookies (attempt 1/3)
+2025-11-15 03:50:40.462 | INFO     | ✅ Using cached cookies (expires in 59.9m)
+2025-11-15 03:50:40.463 | INFO     | STEP 1 COMPLETE: Cookies ready in 0.00s
+2025-11-15 03:50:40.463 | INFO     | STEP 2: Fetch flight data from AA.com API (parallel)
+2025-11-15 03:50:40.463 | DEBUG    |    Request order: Revenue then Award
+2025-11-15 03:50:40.463 | INFO     | 🚀 START: Fetching Award pricing for LAX->JFK
+2025-11-15 03:50:40.464 | INFO     | 🚀 START: Fetching Revenue pricing for LAX->JFK
+2025-11-15 03:50:43.350 | INFO     | ✅ Updated cookie expiration from API: 1763182241 (59m remaining)
+2025-11-15 03:50:43.351 | INFO     | ✅ SUCCESS: Award completed in 2.89s - 40 flights retrieved
+2025-11-15 03:50:43.914 | INFO     | ✅ Updated cookie expiration from API: 1763182242 (59m remaining)
+2025-11-15 03:50:43.914 | INFO     | ✅ SUCCESS: Revenue completed in 3.45s - 40 flights retrieved
+2025-11-15 03:50:43.917 | INFO     | STEP 2 COMPLETE: Both API calls completed in 3.45s
+2025-11-15 03:50:43.917 | INFO     | STEP 3: Match flights and extract Main cabin pricing
+2025-11-15 03:50:43.917 | INFO     | 🔍 Matching 40 award flights with 40 cash flights...
+2025-11-15 03:50:43.917 | DEBUG    |    Found 19 matching hashes
+2025-11-15 03:50:43.918 | INFO     | ✅ Processed 19 flights with Main cabin pricing (skipped 0 without Main)
+2025-11-15 03:50:43.919 | INFO     | STEP 3 COMPLETE: Matched 19 flights
+2025-11-15 03:50:43.919 | INFO     | ======================================================================
+2025-11-15 03:50:43.919 | INFO     | ✅ SCRAPE COMPLETE in 3.46s! Found 19 flights
+2025-11-15 03:50:43.919 | INFO     | ======================================================================
+2025-11-15 03:50:43.928 | INFO     | ✅ Output written to: /app/output/output.json
+2025-11-15 03:50:43.928 | INFO     | ======================================================================
+2025-11-15 03:50:43.928 | INFO     | ✅ SCRAPER COMPLETED SUCCESSFULLY
+2025-11-15 03:50:43.928 | INFO     | ======================================================================

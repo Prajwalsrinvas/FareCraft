@@ -268,7 +268,7 @@ def update_cookie_expiration_from_response(response_data: dict) -> None:
                 os.close(db_fd)
 
                 # 2. System-wide sync to flush all filesystem buffers
-                subprocess.run(['sync'], check=False, capture_output=True, timeout=1)
+                subprocess.run(["sync"], check=False, capture_output=True, timeout=1)
 
                 # 3. Small delay for Docker volume mount to complete async flush
                 time.sleep(0.15)

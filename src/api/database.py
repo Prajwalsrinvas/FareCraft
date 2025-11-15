@@ -3,14 +3,6 @@ Database setup and operations for scrape history
 """
 
 import json
-import sqlite3
-from contextlib import contextmanager
-from datetime import datetime
-from pathlib import Path
-from typing import Any
-
-from loguru import logger
-
 # Output directory: Use absolute path that works in Docker and local
 # Docker: /app/output/ (volume mount from ./output on host)
 # Local: <project_root>/output/ (where pyproject.toml is located)
@@ -19,7 +11,12 @@ from loguru import logger
 # 1. Docker: Check if /app/output exists (created by Dockerfile)
 # 2. Local: Find project root (containing pyproject.toml) and use {root}/output
 import os
-import sys
+import sqlite3
+from contextlib import contextmanager
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
 
 def find_project_root() -> Path:
     """
@@ -36,6 +33,7 @@ def find_project_root() -> Path:
 
     # Fallback: use current working directory
     return Path.cwd()
+
 
 # Determine output directory based on environment
 if os.path.exists("/app/output"):
@@ -353,7 +351,8 @@ def save_cookie_cache(cookies: dict[str, str], expiration_timestamp: int) -> Non
 
         # 2. System-wide sync to flush all filesystem buffers
         import subprocess
-        subprocess.run(['sync'], check=False, capture_output=True, timeout=1)
+
+        subprocess.run(["sync"], check=False, capture_output=True, timeout=1)
 
         # 3. Small delay for Docker volume mount to complete async flush
         # Volume mounts have additional buffering that happens after OS sync

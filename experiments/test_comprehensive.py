@@ -2,8 +2,8 @@
 Comprehensive test suite to ensure scraper robustness
 Tests: fresh run, cookie caching, error handling, data accuracy
 """
+
 import json
-import os
 import sys
 import time
 from pathlib import Path
@@ -11,7 +11,8 @@ from pathlib import Path
 # Add src to path (now in experiments folder, go up one level)
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from scraper.scraper import scrape_flights  # Uses pure parallel (production default)
+from scraper.scraper import \
+    scrape_flights  # Uses pure parallel (production default)
 
 
 def test_1_fresh_scrape():
@@ -28,31 +29,41 @@ def test_1_fresh_scrape():
 
         flights = output.get("flights", [])
 
-        print(f"\n✅ Test 1 PASSED")
+        print("\n✅ Test 1 PASSED")
         print(f"   Time: {elapsed:.2f}s")
         print(f"   Flights: {len(flights)}")
         print(f"   Has search_metadata: {bool(output.get('search_metadata'))}")
-        print(f"   Total_results matches: {output.get('total_results') == len(flights)}")
+        print(
+            f"   Total_results matches: {output.get('total_results') == len(flights)}"
+        )
 
         # Validate a sample flight
         if flights:
             flight = flights[0]
-            print(f"\n   Sample flight validation:")
+            print("\n   Sample flight validation:")
             print(f"   - Has segments: {bool(flight.get('segments'))}")
             print(f"   - Has points_required: {bool(flight.get('points_required'))}")
             print(f"   - Has cash_price_usd: {bool(flight.get('cash_price_usd'))}")
             print(f"   - Has cpp: {bool(flight.get('cpp'))}")
 
             # Verify CPP calculation
-            cpp_calc = round((flight['cash_price_usd'] - flight['taxes_fees_usd']) / flight['points_required'] * 100, 2)
-            cpp_match = abs(cpp_calc - flight['cpp']) < 0.01
-            print(f"   - CPP calculation correct: {cpp_match} (calc: {cpp_calc}, stored: {flight['cpp']})")
+            cpp_calc = round(
+                (flight["cash_price_usd"] - flight["taxes_fees_usd"])
+                / flight["points_required"]
+                * 100,
+                2,
+            )
+            cpp_match = abs(cpp_calc - flight["cpp"]) < 0.01
+            print(
+                f"   - CPP calculation correct: {cpp_match} (calc: {cpp_calc}, stored: {flight['cpp']})"
+            )
 
         return True, elapsed
 
     except Exception as e:
         print(f"\n❌ Test 1 FAILED: {e}")
         import traceback
+
         traceback.print_exc()
         return False, 0
 
@@ -71,7 +82,7 @@ def test_2_cached_scrape():
 
         flights = output.get("flights", [])
 
-        print(f"\n✅ Test 2 PASSED")
+        print("\n✅ Test 2 PASSED")
         print(f"   Time: {elapsed:.2f}s (should be faster than Test 1)")
         print(f"   Flights: {len(flights)}")
 
@@ -112,17 +123,24 @@ def test_3_output_json_format():
         # Check flights structure
         flights = data["flights"]
         if not isinstance(flights, list):
-            print(f"❌ Flights is not a list")
+            print("❌ Flights is not a list")
             return False
 
         if len(flights) == 0:
-            print(f"⚠️  No flights found (might be route issue)")
+            print("⚠️  No flights found (might be route issue)")
 
         # Check first flight structure
         if flights:
             flight = flights[0]
-            flight_keys = ["is_nonstop", "segments", "total_duration", "points_required",
-                          "cash_price_usd", "taxes_fees_usd", "cpp"]
+            flight_keys = [
+                "is_nonstop",
+                "segments",
+                "total_duration",
+                "points_required",
+                "cash_price_usd",
+                "taxes_fees_usd",
+                "cpp",
+            ]
             missing_flight_keys = [k for k in flight_keys if k not in flight]
 
             if missing_flight_keys:
@@ -131,7 +149,7 @@ def test_3_output_json_format():
 
             # Check segments structure
             if not flight["segments"] or not isinstance(flight["segments"], list):
-                print(f"❌ Segments is empty or not a list")
+                print("❌ Segments is empty or not a list")
                 return False
 
             segment = flight["segments"][0]
@@ -153,18 +171,20 @@ def test_3_output_json_format():
 
             for key, expected_type in type_checks.items():
                 if not isinstance(flight[key], expected_type):
-                    print(f"❌ {key} has wrong type: expected {expected_type}, got {type(flight[key])}")
+                    print(
+                        f"❌ {key} has wrong type: expected {expected_type}, got {type(flight[key])}"
+                    )
                     return False
 
-        print(f"\n✅ Test 3 PASSED")
-        print(f"   All required fields present")
-        print(f"   All types correct")
-        print(f"   Format matches contest specification")
+        print("\n✅ Test 3 PASSED")
+        print("   All required fields present")
+        print("   All types correct")
+        print("   Format matches contest specification")
 
         return True
 
     except FileNotFoundError:
-        print(f"❌ output.json not found")
+        print("❌ output.json not found")
         return False
     except json.JSONDecodeError as e:
         print(f"❌ Invalid JSON: {e}")
@@ -172,6 +192,7 @@ def test_3_output_json_format():
     except Exception as e:
         print(f"❌ Test 3 FAILED: {e}")
         import traceback
+
         traceback.print_exc()
         return False
 
@@ -203,11 +224,11 @@ def test_4_data_consistency():
         diff = abs(len(flights1) - len(flights2))
 
         if diff <= 3:  # Allow small variance (flights come/go)
-            print(f"\n✅ Test 4 PASSED")
+            print("\n✅ Test 4 PASSED")
             print(f"   Flight count difference: {diff} (acceptable)")
         else:
             print(f"\n⚠️  Test 4 WARNING: Large difference in flight count: {diff}")
-            print(f"   This might indicate inconsistent scraping")
+            print("   This might indicate inconsistent scraping")
 
         return True
 
@@ -252,22 +273,22 @@ def test_5_performance_baseline():
         min_time = min(valid_times)
         max_time = max(valid_times)
 
-        print(f"\n✅ Test 5 COMPLETE")
+        print("\n✅ Test 5 COMPLETE")
         print(f"   Average time: {avg_time:.2f}s")
         print(f"   Min time: {min_time:.2f}s")
         print(f"   Max time: {max_time:.2f}s")
         print(f"   Success rate: {len(valid_times)}/3 ({len(valid_times)/3*100:.0f}%)")
 
         if len(valid_times) == 3 and max_time < 15:
-            print(f"   Performance: EXCELLENT ✅")
+            print("   Performance: EXCELLENT ✅")
         elif len(valid_times) >= 2:
-            print(f"   Performance: ACCEPTABLE ⚠️")
+            print("   Performance: ACCEPTABLE ⚠️")
         else:
-            print(f"   Performance: NEEDS IMPROVEMENT ❌")
+            print("   Performance: NEEDS IMPROVEMENT ❌")
 
         return True
     else:
-        print(f"\n❌ Test 5 FAILED: All runs failed")
+        print("\n❌ Test 5 FAILED: All runs failed")
         return False
 
 

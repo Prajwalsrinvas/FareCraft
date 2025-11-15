@@ -2,8 +2,8 @@
 Comprehensive comparison: Sequential vs Pure Parallel vs Staggered Parallel
 Same test suite for all 3 implementations
 """
+
 import json
-import os
 import sys
 import time
 from pathlib import Path
@@ -11,11 +11,12 @@ from pathlib import Path
 # Add src to path (now in experiments folder, go up one level)
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+from api.database import init_db
+from scraper.scraper import \
+    scrape_flights as scrape_parallel  # Default is pure parallel
 # Import all 3 versions
 from scraper.scraper_sequential import scrape_flights as scrape_sequential
-from scraper.scraper import scrape_flights as scrape_parallel  # Default is pure parallel
 from scraper.scraper_staggered import scrape_flights as scrape_staggered
-from api.database import init_db
 
 
 def run_test_suite(scrape_func, name, description):
@@ -49,7 +50,7 @@ def run_test_suite(scrape_func, name, description):
             results["tests_passed"] += 1
             print(f"✅ PASS - {elapsed:.2f}s, {len(flights)} flights")
         else:
-            print(f"❌ FAIL - Invalid output")
+            print("❌ FAIL - Invalid output")
             results["errors"].append("Test 1: Invalid output structure")
     except Exception as e:
         print(f"❌ FAIL - {e}")
@@ -87,13 +88,15 @@ def run_test_suite(scrape_func, name, description):
         avg = sum(results["cached_times"]) / 3
         print(f"✅ PASS - Avg: {avg:.2f}s")
     else:
-        print(f"❌ FAIL - Some runs failed")
+        print("❌ FAIL - Some runs failed")
 
     results["tests_total"] += 1
 
     # Calculate stats
     if results["cached_times"]:
-        results["avg_cached"] = sum(results["cached_times"]) / len(results["cached_times"])
+        results["avg_cached"] = sum(results["cached_times"]) / len(
+            results["cached_times"]
+        )
         results["min_cached"] = min(results["cached_times"])
         results["max_cached"] = max(results["cached_times"])
 
@@ -128,7 +131,7 @@ def main():
     seq_results = run_test_suite(
         scrape_sequential,
         "SEQUENTIAL",
-        "Award request completes, delay, then Revenue request starts"
+        "Award request completes, delay, then Revenue request starts",
     )
     all_results.append(seq_results)
 
@@ -144,7 +147,7 @@ def main():
     par_results = run_test_suite(
         scrape_parallel,
         "PURE PARALLEL",
-        "Award and Revenue start at exact same millisecond"
+        "Award and Revenue start at exact same millisecond",
     )
     all_results.append(par_results)
 
@@ -160,7 +163,7 @@ def main():
     stag_results = run_test_suite(
         scrape_staggered,
         "STAGGERED PARALLEL",
-        "Award starts, 0.2-1.0s delay, Revenue starts (both run concurrently)"
+        "Award starts, 0.2-1.0s delay, Revenue starts (both run concurrently)",
     )
     all_results.append(stag_results)
 
@@ -173,15 +176,19 @@ def main():
 
     print("\n📊 Test Success Rate:")
     for res in all_results:
-        rate = res['tests_passed'] / res['tests_total'] * 100
+        rate = res["tests_passed"] / res["tests_total"] * 100
         status = "✅" if rate == 100 else "⚠️"
-        print(f"  {status} {res['name']:20s}: {res['tests_passed']}/{res['tests_total']} ({rate:.0f}%)")
+        print(
+            f"  {status} {res['name']:20s}: {res['tests_passed']}/{res['tests_total']} ({rate:.0f}%)"
+        )
 
     print("\n⚡ Performance (cached runs - avg of 3):")
     for res in all_results:
         if res.get("avg_cached"):
-            print(f"  {res['name']:20s}: {res['avg_cached']:.2f}s "
-                  f"(range: {res['min_cached']:.2f}s - {res['max_cached']:.2f}s)")
+            print(
+                f"  {res['name']:20s}: {res['avg_cached']:.2f}s "
+                f"(range: {res['min_cached']:.2f}s - {res['max_cached']:.2f}s)"
+            )
 
     # Find fastest
     if all(res.get("avg_cached") for res in all_results):
@@ -191,7 +198,9 @@ def main():
 
         print(f"\n  🏆 Fastest: {fastest['name']} ({fastest['avg_cached']:.2f}s)")
         print(f"  🐌 Slowest: {slowest['name']} ({slowest['avg_cached']:.2f}s)")
-        print(f"  📊 Difference: {diff:.2f}s ({diff/slowest['avg_cached']*100:.1f}% faster)")
+        print(
+            f"  📊 Difference: {diff:.2f}s ({diff/slowest['avg_cached']*100:.1f}% faster)"
+        )
 
     print("\n🚨 Errors & Reliability:")
     for res in all_results:
@@ -207,49 +216,59 @@ def main():
     print("=" * 70)
 
     # Find most reliable
-    best_reliability = max(all_results, key=lambda x: x['tests_passed'] / x['tests_total'])
+    best_reliability = max(
+        all_results, key=lambda x: x["tests_passed"] / x["tests_total"]
+    )
 
     # Check if all are equally reliable
-    all_reliable = all(res['tests_passed'] == res['tests_total'] for res in all_results)
+    all_reliable = all(res["tests_passed"] == res["tests_total"] for res in all_results)
 
     if all_reliable and all(res.get("avg_cached") for res in all_results):
         fastest = min(all_results, key=lambda x: x["avg_cached"])
-        sequential = next(r for r in all_results if r['name'] == 'SEQUENTIAL')
+        sequential = next(r for r in all_results if r["name"] == "SEQUENTIAL")
 
         speed_diff = sequential["avg_cached"] - fastest["avg_cached"]
 
-        print(f"✅ All approaches are 100% reliable!")
-        print(f"\nSpeed comparison:")
+        print("✅ All approaches are 100% reliable!")
+        print("\nSpeed comparison:")
         print(f"  • Sequential: {sequential['avg_cached']:.2f}s")
         print(f"  • Fastest ({fastest['name']}): {fastest['avg_cached']:.2f}s")
-        print(f"  • Difference: {speed_diff:.2f}s ({speed_diff/sequential['avg_cached']*100:.1f}%)")
+        print(
+            f"  • Difference: {speed_diff:.2f}s ({speed_diff/sequential['avg_cached']*100:.1f}%)"
+        )
 
         if speed_diff < 0.5:
-            print(f"\n🎯 RECOMMENDATION: **SEQUENTIAL**")
-            print(f"   Reasons:")
+            print("\n🎯 RECOMMENDATION: **SEQUENTIAL**")
+            print("   Reasons:")
             print(f"   • Only {abs(speed_diff):.2f}s slower (negligible)")
-            print(f"   • Most human-like (requests don't overlap)")
-            print(f"   • Lowest bot detection risk")
-            print(f"   • Contest emphasizes 'without detection'")
+            print("   • Most human-like (requests don't overlap)")
+            print("   • Lowest bot detection risk")
+            print("   • Contest emphasizes 'without detection'")
         elif speed_diff < 1.5:
-            print(f"\n⚖️  RECOMMENDATION: **SEQUENTIAL** (safer) or **STAGGERED** (faster)")
-            print(f"   Trade-off decision:")
+            print(
+                "\n⚖️  RECOMMENDATION: **SEQUENTIAL** (safer) or **STAGGERED** (faster)"
+            )
+            print("   Trade-off decision:")
             print(f"   • Sequential: Safest, only {speed_diff:.2f}s slower")
             print(f"   • Staggered: {speed_diff:.2f}s faster, medium bot risk")
         else:
-            staggered = next((r for r in all_results if r['name'] == 'STAGGERED PARALLEL'), None)
+            staggered = next(
+                (r for r in all_results if r["name"] == "STAGGERED PARALLEL"), None
+            )
             if staggered:
                 stag_diff = sequential["avg_cached"] - staggered["avg_cached"]
-                print(f"\n⚖️  RECOMMENDATION: **STAGGERED PARALLEL**")
+                print("\n⚖️  RECOMMENDATION: **STAGGERED PARALLEL**")
                 print(f"   • {stag_diff:.2f}s faster than sequential")
-                print(f"   • Lower bot risk than pure parallel")
-                print(f"   • Good speed/safety balance")
+                print("   • Lower bot risk than pure parallel")
+                print("   • Good speed/safety balance")
     else:
         # Some failed - recommend most reliable
-        print(f"⚠️  Not all approaches are reliable!")
+        print("⚠️  Not all approaches are reliable!")
         print(f"\n🎯 RECOMMENDATION: **{best_reliability['name']}**")
-        print(f"   • Highest success rate: {best_reliability['tests_passed']}/{best_reliability['tests_total']}")
-        print(f"   • Reliability is more important than speed")
+        print(
+            f"   • Highest success rate: {best_reliability['tests_passed']}/{best_reliability['tests_total']}"
+        )
+        print("   • Reliability is more important than speed")
 
     print(f"\n⏱️  Total test time: {overall_time/60:.1f} minutes")
 
@@ -262,7 +281,7 @@ def main():
 
     with open("comparison_results.json", "w") as f:
         json.dump(comparison_data, f, indent=2)
-    print(f"📊 Detailed results saved to: comparison_results.json")
+    print("📊 Detailed results saved to: comparison_results.json")
 
 
 if __name__ == "__main__":
